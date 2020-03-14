@@ -1,0 +1,13 @@
+{
+  "env": {
+    "es6": true,
+    "node": true,
+    "commonjs": true,
+    "browser": false,
+    "mocha": true
+  },
+	"extends": [
+    "airbnb",
+    "airbnb/whitespace"
+	]
+}

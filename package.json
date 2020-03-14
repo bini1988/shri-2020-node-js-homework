@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/bini1988/shri-2020-node-js-homework/issues"
   },
-  "homepage": "https://github.com/bini1988/shri-2020-node-js-homework#readme"
+  "homepage": "https://github.com/bini1988/shri-2020-node-js-homework#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^2.5.0"
+  }
 }
