@@ -1,0 +1,19 @@
+{
+  "name": "shri-2020-node-js-homework",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bini1988/shri-2020-node-js-homework.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bini1988/shri-2020-node-js-homework/issues"
+  },
+  "homepage": "https://github.com/bini1988/shri-2020-node-js-homework#readme"
+}
