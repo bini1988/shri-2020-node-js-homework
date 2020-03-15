@@ -12,6 +12,7 @@ npm-debug.log*
 node_modules/
 uploads/
 db/
+tmp/
 
 # Папка с собранными файлами проекта
 build/
