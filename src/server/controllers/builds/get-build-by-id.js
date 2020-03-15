@@ -1,11 +1,18 @@
+const asyncHandler = require('express-async-handler');
+const NotFoundError = require('../../services/errors/not-found-error');
+const api = require('../../services/ci-api');
 
 /**
  * Получение информации о конкретной сборке
  */
-function getBuildById(req, res) {
+module.exports = asyncHandler(async (req, res) => {
   const { buildId } = req.params;
 
-  res.status(200).json({ message: `get-build-by-id-${buildId}` });
-}
+  try {
+    const data = await api.Build.fetchBuild(buildId);
 
-module.exports = getBuildById;
+    res.status(200).json({ data });
+  } catch (error) {
+    throw new NotFoundError(`Build with id '${buildId}' is not found`);
+  }
+});

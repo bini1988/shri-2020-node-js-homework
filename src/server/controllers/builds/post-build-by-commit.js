@@ -1,11 +1,19 @@
+const asyncHandler = require('express-async-handler');
+const NotFoundError = require('../../services/errors/not-found-error');
+const api = require('../../services/ci-api');
 
 /**
  * Добавление сборки в очередь
  */
-function postBuildByCommit(req, res) {
+module.exports = asyncHandler(async (req, res) => {
   const { commitHash } = req.params;
 
-  res.status(200).json({ message: `get-build-by-commit-${commitHash}` });
-}
+  try {
+    const params = { commitHash };
+    const data = await api.Build.queueBuild(params);
 
-module.exports = postBuildByCommit;
+    res.status(200).json({ data });
+  } catch (error) {
+    throw new NotFoundError(`Build with commit '${commitHash}' is not found`);
+  }
+});
