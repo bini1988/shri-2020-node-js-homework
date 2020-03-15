@@ -1,9 +1,9 @@
+const asyncHandler = require('express-async-handler');
+const api = require('../../services/ci-api');
 
 /**
  * Получение сохраненных настроек
  */
-function getSettings(req, res) {
-  res.status(200).json({ message: 'get-settings' });
-}
-
-module.exports = getSettings;
+module.exports = asyncHandler(async (req, res) => {
+  res.status(200).json(await api.Settings.fetch());
+});
