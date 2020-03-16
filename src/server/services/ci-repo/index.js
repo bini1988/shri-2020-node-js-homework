@@ -44,7 +44,7 @@ class CIRepo {
 
       return (out === 'commit');
     } catch (error) {
-      throw new Error(`Can not found commit or branch ${name}`);
+      throw new Error(`CIRepo: Can not found commit or branch ${name}\n`);
     }
   }
 
