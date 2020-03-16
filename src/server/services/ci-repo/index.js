@@ -6,7 +6,10 @@ const access = util.promisify(fs.access);
 const TMP_DIR = process.env.TMP_DIR || 'tmp';
 const SPLIT_CHAR = '<##>';
 
-class CIGit {
+/**
+ * Работа с локальной копией репозитория
+ */
+class CIRepo {
   constructor(name = '', base) {
     this.base = base || 'https://github.com/';
     this.name = name;
@@ -88,4 +91,4 @@ class CIGit {
   }
 }
 
-module.exports = CIGit;
+module.exports = CIRepo;
