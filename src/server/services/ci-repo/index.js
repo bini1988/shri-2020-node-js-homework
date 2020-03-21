@@ -61,7 +61,7 @@ class CIRepo {
    * @param {string} hash Название ветки или хэш коммита
    */
   async getBranchByCommit(hash) {
-    const cmd = `git -C ${this.path} branch --contains ${hash} -r"`;
+    const cmd = `git -C ${this.path} branch --contains ${hash} -r`;
     const output = await exec(cmd, this.path);
 
     return output ? output.replace(/(\r\n|\n|\r)/gm, '').split('/').pop() : '';
