@@ -3,11 +3,22 @@
     "es6": true,
     "node": true,
     "commonjs": true,
-    "browser": false,
-    "mocha": true
+    "browser": true,
+    "mocha": true,
+    "jest": true
   },
 	"extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
     "airbnb",
     "airbnb/whitespace"
-	]
+  ],
+  "plugins": [
+    "react",
+    "react-hooks"
+  ],
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+    "react/jsx-curly-brace-presence": [1, { "props": "never", "children": "always" }]
+  }
 }
