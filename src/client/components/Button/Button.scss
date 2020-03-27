@@ -1,0 +1,75 @@
+@import "common/sass/mixins";
+
+.Button {
+  display: inline-block;
+  vertical-align: top;
+
+  padding: 0;
+
+  color: var(--color-text-primary);
+  font-size: var(--text-size-s);
+  line-height: var(--text-line-height-s);
+  text-decoration: none;
+
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background-color: var(--color-bg-control);
+
+  cursor: pointer;
+  outline: none;
+}
+
+.Button-Wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 13px;
+  min-height: 24px;
+}
+
+.Button-Icon {
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin-bottom: 1px;
+  fill: var(--color-text-primary);
+}
+
+.Button-Label {
+  margin: 0 5px;
+}
+
+.Button:hover {
+  background-color: var(--color-bg-control-hovered);
+}
+
+.Button:focus {
+  border-color: var(--color-bg-control-outline);
+}
+
+.Button_theme_action {
+  background-color: var(--color-bg-action);
+}
+
+.Button_theme_action:hover {
+  background-color: var(--color-bg-action-hovered);
+}
+
+.Button_theme_action:focus {
+  border-color: var(--color-bg-action-outline);
+}
+
+.Button_size_s .Button-Wrapper {
+  padding: 4px 6px;
+}
+
+.Button_view_tile .Button-Label,
+.Button_adaptive .Button-Label {
+  display: none;
+}
+
+.Button_adaptive .Button-Label {
+  @include bp-desktop {
+    display: inline-block;
+  };
+}

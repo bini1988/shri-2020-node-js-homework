@@ -1,0 +1,8 @@
+
+.BuildDetails-Title_hidden {
+  @include visually-hidden();
+}
+
+.BuildDetails-Card {
+  margin-bottom: 12px;
+}

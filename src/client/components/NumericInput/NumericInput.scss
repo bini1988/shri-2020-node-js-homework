@@ -1,0 +1,14 @@
+
+.TextInput-Label {
+  display: inline-block;
+  margin-bottom: 6px;
+
+  line-height: var(--text-line-height-m);
+  letter-spacing: 0.06px;
+}
+
+.TextInput_required .TextInput-Label::after {
+  content: " *";
+
+  color: var(--color-red-500);
+}

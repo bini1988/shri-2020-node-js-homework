@@ -1,0 +1,29 @@
+@import "common/sass/mixins";
+
+.CommitSpan-Wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.CommitSpan-Label,
+.CommitSpan-Icon,
+.CommitSpan-Branch {
+  flex: 0 1 auto;
+  margin-right: var(--space-xxs);
+  letter-spacing: 0.06px;
+}
+
+.CommitSpan-Label {
+  @include visually-hidden();
+}
+
+.CommitSpan-Icon {
+  display: inline-block;
+  vertical-align: top;
+  fill: var(--color-bg-icon);
+}
+
+.CommitSpan-Hash {
+  flex: 0 1 auto;
+  color: var(--color-text-alternate);
+}

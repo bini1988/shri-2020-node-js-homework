@@ -1,0 +1,23 @@
+
+.BuildHistory-Title_hidden {
+  display: none;
+}
+
+.BuildHistory-Items {
+  margin: 0;
+  padding: 0;
+
+  list-style-type: none;
+}
+
+.BuildHistory-Item {
+  margin-bottom: 8px;
+}
+
+.BuildHistory-More {
+  width: 100%;
+
+  @include bp-desktop {
+    width: auto;
+  }
+}

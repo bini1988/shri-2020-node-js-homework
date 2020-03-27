@@ -1,0 +1,21 @@
+@import "common/sass/mixins";
+
+.OwnerSpan-Label,
+.OwnerSpan-Icon,
+.OwnerSpan-Name {
+  flex: 0 1 auto;
+}
+
+.OwnerSpan-Label {
+  @include visually-hidden();
+
+  line-height: var(--text-line-height-s);
+  letter-spacing: 0.06px;
+}
+
+.OwnerSpan-Icon {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: var(--space-xxs);
+  fill: var(--color-border-focused);
+}

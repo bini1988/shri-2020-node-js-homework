@@ -1,0 +1,72 @@
+
+.Settings {
+  max-width: 474px;
+}
+
+.Settings-Title,
+.Settings-Text {
+  margin-top: var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+
+.Settings-Title {
+  margin-top: 14px;
+  font-size: var(--text-size-m);
+  line-height: var(--text-line-height-l);
+
+  @include bp-desktop {
+    margin-top: 8px;
+  }
+}
+
+.Settings-Text {
+  margin-bottom: var(--space-l);
+
+  color: var(--color-text-secondary);
+  line-height: var(--text-line-height-m);
+
+
+  @include bp-desktop {
+    margin-bottom: 22px;
+  }
+}
+
+.Settings-Fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.Settings-Fields {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.Settings-Field {
+  margin-bottom: 18px;
+}
+
+.Settings-Field:last-child {
+  margin-bottom: 0;
+}
+
+.Settings-Footer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+
+  @include bp-desktop {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.Settings-Button + .Settings-Button {
+  margin-top: var(--space-m);
+
+  @include bp-desktop {
+    margin-top: 0;
+    margin-left: var(--space-xs);
+  }
+}

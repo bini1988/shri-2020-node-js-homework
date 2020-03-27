@@ -1,0 +1,19 @@
+@import "common/sass/mixins";
+
+.DateTime-Label {
+  @include visually-hidden();
+}
+
+.DateTime-Icon {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: var(--space-xxs);
+  fill: var(--color-border-focused);
+}
+
+.DateTime-Time {
+  display: inline-block;
+  line-height: var(--text-line-height-s);
+  letter-spacing: 0.06px;
+  color: var(--color-text-alternate);
+}

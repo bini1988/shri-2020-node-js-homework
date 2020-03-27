@@ -1,0 +1,13 @@
+
+.ConsoleLog {
+  padding: 8px 12px;
+  border-radius: 6px;
+  background-color: var(--color-bg-control-disabled);
+}
+
+.ConsoleLog-Wrappper {
+  margin: 0;
+  padding: 0;
+  min-width: 100%;
+  overflow-x: auto;
+}

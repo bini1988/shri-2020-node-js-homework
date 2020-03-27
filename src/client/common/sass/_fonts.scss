@@ -1,0 +1,38 @@
+@font-face {
+  font-family: "YS Text";
+  font-weight: 400;
+  font-style: normal;
+  src:
+    local("YS Text"),
+    url("//yastatic.net/islands/_/PyVcRbwHetz0gOVWLonWH7Od8zM.woff2") format("woff2"),
+    url("//yastatic.net/islands/_/bIx8jOfCEfR-mECoDUEZywDBuHA.woff") format("woff"),
+    url("../fonts/YS Text-Regular.woff2") format("woff2"),
+    url("../fonts/YS Text-Regular.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "YS Text";
+  font-weight: 500;
+  font-style: normal;
+  src:
+    local("YS Text-Medium"),
+    url("//yastatic.net/islands/_/7_GKBdKFbUPzKlghJRv55xgz0FQ.woff2") format("woff2"),
+    url("//yastatic.net/islands/_/SmqPmIMEXrW4lOY8QrhTUVDbrro.woff") format("woff"),
+    url("../fonts/YS Text-Medium.woff2") format("woff2"),
+    url("../fonts/YS Text-Medium.woff") format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "YS Text";
+  font-weight: 700;
+  font-style: normal;
+  src:
+    local("YS Text-Bold"),
+    url("//yastatic.net/islands/_/6Roy0LCd05cK4nNCipgzheYcNVU.woff2") format("woff2"),
+    url("//yastatic.net/islands/_/KtHQR1erf3spayoIM4M4ngg0e2E.woff") format("woff"),
+    url("../fonts/YS Text-Bold.woff2") format("woff2"),
+    url("../fonts/YS Text-Bold.woff") format("woff");
+  font-display: swap;
+}
