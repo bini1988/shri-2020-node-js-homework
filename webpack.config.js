@@ -8,10 +8,17 @@ const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+
+const ROOT = path.resolve(__dirname, ".");
+const CACHE_DIR_PATH = path.resolve(ROOT, ".", "node_modules", ".cache");
+const POSTCSS_CONFIG_PATH = path.resolve(ROOT, "./postcss.config.js");
 
 const OUTPUT_PATH = path.resolve(__dirname, './static');
 const IS_PRODUCTION = (process.env.NODE_ENV === 'production');
+const WITH_HASH = IS_PRODUCTION ? ".[contenthash]" : "";
 
 /**
  * Common Webpack Config
@@ -21,19 +28,29 @@ const common = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         exclude: /node_modules/,
         use: [{
-          loader: 'babel-loader',
+          loader: "babel-loader",
+          options: {cacheDirectory: path.resolve(CACHE_DIR_PATH, "babel")}
         }],
       }, {
-        test: /\.(css)$/,
+        test: /\.(css|scss|sass)$/,
         use: [{
           loader: IS_PRODUCTION
-            ? MiniCssExtractPlugin.loader : 'style-loader',
+            ? MiniCssExtractPlugin.loader : "style-loader",
         }, {
-          loader: 'css-loader',
-          options: { sourceMap: true, importLoaders: 1 },
+          loader: "css-loader",
+          options: {sourceMap: true, importLoaders: 1},
+        }, {
+          loader: "postcss-loader",
+          options: {sourceMap: true, config: {path: POSTCSS_CONFIG_PATH}},
+        }, {
+          loader: "resolve-url-loader",
+          options: {sourceMap: true},
+        }, {
+          loader: "sass-loader",
+          options: {sourceMap: true}
         }],
       }, {
         test: /\.(woff|woff2)$/,
@@ -44,6 +61,12 @@ const common = {
             outputPath: OUTPUT_PATH,
             useRelativePath: true,
           },
+        }],
+      }, {
+        test: /\.(png|jpg|gif)$/,
+        use: [{
+          loader: "file-loader",
+          options: {name: "[hash:12].[ext]", outputPath: `${OUTPUT_PATH}/img`},
         }],
       },
     ],
@@ -59,7 +82,12 @@ const common = {
     }),
   ],
   resolve: {
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
     modules: ['node_modules'],
+    alias: {
+      "components": path.resolve(ROOT, "./src/client/components"),
+      "common": path.resolve(ROOT, "./src/client/common"),
+    }
   },
 };
 
@@ -68,15 +96,20 @@ const development = {
   output: {
     path: OUTPUT_PATH,
     publicPath: 'http://localhost:3000/',
-    filename: '[name].bundle.min.js',
-    chunkFilename: '[name].chunk.min.js',
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].chunk.js',
     pathinfo: true,
   },
   devtool: 'cheap-module-eval-source-map',
   devServer: {
     port: 3000,
+    hot: true,
     overlay: true,
+    historyApiFallback: true,
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+  ],
 };
 
 /* Production Webpack Config */
@@ -85,8 +118,8 @@ const production = {
   output: {
     path: OUTPUT_PATH,
     publicPath: '/',
-    filename: '[name].bundle.min.js',
-    chunkFilename: '[name].chunk.min.js',
+    filename: `[name].bundle${WITH_HASH}.min.js`,
+    chunkFilename: `[name].chunk${WITH_HASH}.min.js`,
     pathinfo: true,
   },
   devtool: false,
@@ -104,23 +137,45 @@ const production = {
         extractComments: false,
       }),
     ],
+    moduleIds: "hashed",
     splitChunks: {
       chunks: 'async',
-      automaticNameDelimiter: '.',
+      maxInitialRequests: Infinity,
+      minSize: 0,
+      automaticNameDelimiter: ".",
       cacheGroups: {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
-          minSize: 15000, // bytes
-          name: 'vendors',
-          chunks: 'all',
+          name: "vendors",
+          chunks: "all",
+          priority: 5,
+          reuseExistingChunk: true,
         },
       },
+    },
+    runtimeChunk: {
+      name: "manifest",
     },
   },
   plugins: [
     new ProgressBarPlugin(),
+    // new CleanWebpackPlugin({
+    //   cleanOnceBeforeBuildPatterns: [
+    //     `${DEST}/${PRJ_NAME}/**/*`
+    //   ],
+    // }),
     new MiniCssExtractPlugin({
-      filename: '[name].style.min.css',
+      filename: `[name].style${WITH_HASH}.min.css`,
+    }),
+    new BundleAnalyzerPlugin({
+      // Can be `server`, `static` or `disabled`.
+      // In `server` mode analyzer will start HTTP server to show bundle report.
+      // In `static` mode single HTML file with bundle report will be generated.
+      // In `disabled` mode you can use this plugin to just generate Webpack Stats JSON file by setting `generateStatsFile` to `true`.
+      analyzerMode: "static",
+      // Path to bundle report file that will be generated in `static` mode.
+      // Relative to bundles output directory.
+      reportFilename: `bundle.report.html`,
     }),
   ],
 };

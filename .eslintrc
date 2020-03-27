@@ -7,18 +7,25 @@
     "mocha": true,
     "jest": true
   },
-	"extends": [
+  "parserOptions": {
+    "ecmaVersion": 9,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "airbnb",
-    "airbnb/whitespace"
+    "airbnb"
   ],
   "plugins": [
     "react",
-    "react-hooks"
+    "react-hooks",
+    "jsx-a11y"
   ],
   "rules": {
+    "indent": [ "error", 2 ],
     "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
-    "react/jsx-curly-brace-presence": [1, { "props": "never", "children": "always" }]
   }
 }
