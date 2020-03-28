@@ -1,12 +1,41 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { cn } from '@bem-react/classname';
+import { classnames } from '@bem-react/classnames';
+
 import './Input.scss';
 
-function Input() {
+const bn = cn('Input');
+
+function Input(props) {
+  const {
+    className, id, name, type, value, palceholder, textAlign, cleanable, onChange,
+  } = props;
+
+  const handleChange = (event) => {
+    onChange(event.target.value, event);
+  };
+  const handleClear = (event) => {
+    onChange('', event);
+  };
+
   return (
-    <div className="Input Input_cleanable">
-      <input className="Input-Control" type="text" id="repository" name="repository" placeholder="user-name/repo-name" />
-      <button className="Input-Clear Input-Clear_hidden" type="button">
-        <svg className="Input-Icon" width="16" height="16">
+    <div className={classnames(className, bn({ textAlign, cleanable }))}>
+      <input
+        className={bn('Control')}
+        type={type}
+        id={id}
+        name={name}
+        value={value}
+        placeholder={palceholder}
+        onChange={handleChange}
+      />
+      <button
+        className={bn('Clear', { hidden: !value })}
+        type="button"
+        onClick={handleClear}
+      >
+        <svg className={bn('Icon')} width="16" height="16">
           <use xlinkHref="#clear" />
         </svg>
         Clear
@@ -14,5 +43,21 @@ function Input() {
     </div>
   );
 }
+
+Input.defaultProps = {
+  type: 'text',
+  onChange: () => {},
+};
+Input.propTypes = {
+  className: PropTypes.string,
+  id: PropTypes.string,
+  name: PropTypes.string,
+  type: PropTypes.string,
+  value: PropTypes.string,
+  palceholder: PropTypes.string,
+  textAlign: PropTypes.string,
+  cleanable: PropTypes.bool,
+  onChange: PropTypes.func,
+};
 
 export default Input;

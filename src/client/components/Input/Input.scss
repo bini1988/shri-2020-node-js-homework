@@ -54,18 +54,18 @@
   fill: var(--color-text-placeholder);
 }
 
-.Input-Clear_hidden {
-  display: none;
-}
-
 .Input_cleanable .Input-Clear {
   display: block;
+}
+
+.Input_cleanable .Input-Clear_hidden {
+  display: none;
 }
 
 .Input_cleanable .Input-Control {
   padding-right: 30px;
 }
 
-.Input_text_align_right .Input-Control {
+.Input_textAlign_right .Input-Control {
   text-align: right;
 }
