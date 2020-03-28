@@ -1,14 +1,11 @@
 
-.TextInput-Label {
-  display: inline-block;
-  margin-bottom: 6px;
-
-  line-height: var(--text-line-height-m);
-  letter-spacing: 0.06px;
+.NumericInput-Wrapper {
+  display: flex;
+  align-items: center;
 }
 
-.TextInput_required .TextInput-Label::after {
-  content: " *";
-
-  color: var(--color-red-500);
+.NumericInput-Control {
+  flex: 0 0 auto;
+  margin: 0 8px;
+  width: 52px;
 }
