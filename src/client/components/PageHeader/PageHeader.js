@@ -23,16 +23,22 @@ function PageHeader(props) {
   );
 }
 
-PageHeader.Title = (props) => (
-  <Title {...props} className={bn('Title')} />
+PageHeader.Title = ({ className, ...props }) => (
+  <Title {...props} className={classnames(className, bn('Title'))} />
 );
-PageHeader.Aside = (props) => (
-  <div {...props} className={bn('Aside')} />
+PageHeader.Aside = ({ className, ...props }) => (
+  <div {...props} className={classnames(className, bn('Aside'))} />
 );
 
 PageHeader.propTypes = {
   className: PropTypes.string,
   children: PropTypes.any,
+};
+PageHeader.Title.propTypes = {
+  className: PropTypes.string,
+};
+PageHeader.Aside.propTypes = {
+  className: PropTypes.string,
 };
 
 export default PageHeader;
