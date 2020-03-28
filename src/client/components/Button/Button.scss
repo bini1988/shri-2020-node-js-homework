@@ -59,6 +59,11 @@
   border-color: var(--color-bg-action-outline);
 }
 
+.Button_theme_secondary {
+  border: 2px solid var(--color-border-default);
+  background-color: transparent;
+}
+
 .Button_size_s .Button-Wrapper {
   padding: 4px 6px;
 }
