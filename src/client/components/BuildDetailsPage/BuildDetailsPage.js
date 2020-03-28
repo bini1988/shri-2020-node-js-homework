@@ -1,58 +1,83 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { cn } from '@bem-react/classname';
+import { classnames } from '@bem-react/classnames';
 
+import './BuildDetailsPage.scss';
 import PageHeader from '../PageHeader';
 import PageFooter from '../PageFooter';
+import Button from '../Button';
 import BuildCard from '../BuildCard';
+
+const bn = cn('BuildDetailsPage');
 
 /**
  * Информация о сборке
  */
-function BuildDetailsPage() {
+function BuildDetailsPage({ className, history }) {
+  const handleSettings = () => history.push('/settings');
+
   return (
-    <>
-      <PageHeader view="accent">
-        <Link
-          className="Header-Button Button Button_theme_normal Button_adaptive Button_size_s"
-          to="/rebuild"
+    <div className={classnames(className, bn())}>
+      <PageHeader className={bn('Header')}>
+        <PageHeader.Title accent>
+          philip1967/my-awesome-repo
+        </PageHeader.Title>
+        <PageHeader.Aside
+          className={bn('Aside')}
         >
-          <span className="Button-Wrapper">
-            <svg className="Button-Icon" width="12" height="12">
-              <use xlinkHref="#rebuild" />
-            </svg>
-            <span className="Button-Label">{'Rebuild'}</span>
-          </span>
-        </Link>
-        <Link
-          className="Header-Button Button Button_theme_normal Button_size_s Button_view_tile"
-          to="/settings"
-        >
-          <span className="Button-Wrapper">
-            <svg className="Button-Icon" width="12" height="12">
-              <use xlinkHref="#settings" />
-            </svg>
-            <span className="Button-Label">{'Settings'}</span>
-          </span>
-        </Link>
+          <Button
+            adaptive
+            label="Rebuild"
+            iconName="rebuild"
+            size="s"
+          />
+          <Button
+            label="Settings"
+            iconName="settings"
+            size="s"
+            view="tile"
+            onClick={handleSettings}
+          />
+        </PageHeader.Aside>
       </PageHeader>
-      <main className="Page-Main Main">
-        <div className="Main-Container Container">
-          <section className="Main-BuildDetailsPage BuildDetailsPage">
-            <h3 className="BuildDetailsPage-Title BuildDetailsPage-Title_hidden">
-              {'BuildDetailsPage'}
+      <main className={bn('Main')}>
+        <div className={classnames(bn('Container'), 'Container')}>
+          <section className={bn('Details')}>
+            <h3 className={bn('Title')}>
+              BuildDetailsPage
             </h3>
-            <BuildCard className="BuildDetailsPage-Card" view="details" />
-            <div className="BuildDetailsPage-ConsoleLog ConsoleLog">
-              <pre className="ConsoleLog-Wrappper">
-                {'Log...'}
+            <BuildCard
+              className="BuildDetailsPage-Card"
+              view="details"
+              card={{
+                status: 'Waiting',
+                buildNumber: 1368,
+                commitMessage: 'add documentation for postgres scaler',
+                branchName: 'master',
+                commitHash: '9c9f0b9',
+                authorName: 'Philip Kirkorov',
+                start: '2020-01-21T03:06:00.000',
+              }}
+            />
+            <div className={bn('ConsoleLog')}>
+              <pre className={bn('Wrappper')}>
+                Log...
               </pre>
             </div>
           </section>
         </div>
       </main>
       <PageFooter />
-    </>
+    </div>
   );
 }
+
+BuildDetailsPage.propTypes = {
+  className: PropTypes.string,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default BuildDetailsPage;

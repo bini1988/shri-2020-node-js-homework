@@ -14,7 +14,7 @@ const bn = cn('BuildCard');
  * Карточка сборки
  */
 function BuildCard(props) {
-  const { className, interactive, card = {} } = props;
+  const { className, interactive, view, card = {} } = props;
   const {
     status,
     buildNumber = '--',
@@ -27,7 +27,7 @@ function BuildCard(props) {
   } = card;
 
   return (
-    <article className={classnames(className, bn({ status, interactive }))}>
+    <article className={classnames(className, bn({ status, interactive, view }))}>
       <div className={bn('Wrapper')}>
         <div className={bn('Status')}>
           <svg className={bn('Icon')} width="24" height="24">
@@ -78,6 +78,8 @@ BuildCard.propTypes = {
   className: PropTypes.string,
   /** Карточка интерактивна */
   interactive: PropTypes.bool,
+  /** Вид отображения карточки */
+  view: PropTypes.string,
   /** Параметры карточки сборки */
   card: PropTypes.shape({
     id: PropTypes.string,
