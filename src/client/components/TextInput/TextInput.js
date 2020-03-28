@@ -10,7 +10,7 @@ const bn = cn('TextInput');
 
 function TextInput(props) {
   const {
-    className, name, label, palceholder, required,
+    className, id, name, label, value, palceholder, required, onChange,
   } = props;
 
   return (
@@ -22,9 +22,12 @@ function TextInput(props) {
       )}
       <Input
         className={bn('Control')}
+        id={id}
         name={name}
+        value={value}
         palceholder={palceholder}
         cleanable
+        onChange={onChange}
       />
     </div>
   );
@@ -32,10 +35,13 @@ function TextInput(props) {
 
 TextInput.propTypes = {
   className: PropTypes.string,
+  id: PropTypes.string,
   name: PropTypes.string,
+  value: PropTypes.string,
   label: PropTypes.string,
   palceholder: PropTypes.string,
   required: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 export default TextInput;

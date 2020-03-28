@@ -12,13 +12,6 @@ function Input(props) {
     className, id, name, type, value, palceholder, textAlign, cleanable, onChange,
   } = props;
 
-  const handleChange = (event) => {
-    onChange(event.target.value, event);
-  };
-  const handleClear = (event) => {
-    onChange('', event);
-  };
-
   return (
     <div className={classnames(className, bn({ textAlign, cleanable }))}>
       <input
@@ -28,12 +21,12 @@ function Input(props) {
         name={name}
         value={value}
         placeholder={palceholder}
-        onChange={handleChange}
+        onChange={(event) => onChange(event.target.value)}
       />
       <button
         className={bn('Clear', { hidden: !value })}
         type="button"
-        onClick={handleClear}
+        onClick={() => onChange('')}
       >
         <svg className={bn('Icon')} width="16" height="16">
           <use xlinkHref="#clear" />

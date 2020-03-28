@@ -10,7 +10,7 @@ const bn = cn('NumericInput');
 
 function NumericInput(props) {
   const {
-    className, id, name, label, palceholder, units,
+    className, id, name, label, value, palceholder, units, onChange,
   } = props;
 
   return (
@@ -25,11 +25,13 @@ function NumericInput(props) {
           className={bn('Control')}
           id={id}
           name={name}
+          value={value}
           palceholder={palceholder}
           type="number"
           min="0"
           max="1000"
           textAlign="right"
+          onChange={onChange}
         />
         <span className={bn('Units')}>{units}</span>
       </div>
@@ -41,9 +43,11 @@ NumericInput.propTypes = {
   className: PropTypes.string,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  value: PropTypes.string,
   label: PropTypes.string.isRequired,
   palceholder: PropTypes.string,
   units: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
 };
 
 export default NumericInput;
