@@ -26,7 +26,7 @@
 }
 
 .BuildHistoryPage-Title {
-  display: none;
+  @include visually-hidden();
 }
 
 .BuildHistoryPage-Items {
