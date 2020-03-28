@@ -1,25 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { cn } from '@bem-react/classname';
+import { classnames } from '@bem-react/classnames';
+
 import './DateTime.scss';
 
+const bn = cn('DateTime');
+const iconNames = {
+  date: 'calendar',
+  time: 'stopwatch',
+};
+
 function DateTime(props) {
-  const { dateTime } = props;
+  const { className, dateTime, view } = props;
+  const iconName = iconNames[view];
 
   return (
-    <span className="DateTime DateTime_view_date">
-      <svg className="DateTime-Icon" width="16" height="16">
-        <use xlinkHref="#calendar" />
-      </svg>
-      <span className="DateTime-Label">Date:</span>
-      <time className="DateTime-Time" dateTime={dateTime}>
+    <span className={classnames(className, bn({ view }))}>
+      {!!iconName && (
+        <svg className={bn('Icon')} width="16" height="16">
+          <use xlinkHref={`#${iconName}`} />
+        </svg>
+      )}
+      <span className={bn('Label')}>Date:</span>
+      <time className={bn('Time')} dateTime={dateTime}>
         21 янв, 03:06
       </time>
     </span>
   );
 }
 
+DateTime.defaultProps = {
+  view: 'date',
+};
 DateTime.propTypes = {
-  dateTime: PropTypes.string.isRequired,
+  className: PropTypes.string,
+  dateTime: PropTypes.string,
+  view: PropTypes.oneOf([
+    'date', 'time',
+  ]),
 };
 
 export default DateTime;
