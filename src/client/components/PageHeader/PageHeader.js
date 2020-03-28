@@ -1,25 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { cn } from '@bem-react/classname';
+import { classnames } from '@bem-react/classnames';
+
 import './PageHeader.scss';
+import Title from '../Title';
+
+const bn = cn('PageHeader');
 
 /**
  * Шапка страницы
  */
-function PageHeader({ children }) {
+function PageHeader(props) {
+  const { className, children } = props;
+
   return (
-    <header className="Page-Header PageHeader">
-      <div className="PageHeader-Container Container">
-        <h1 className="PageHeader-Title Title">School CI server</h1>
-        <div className="PageHeader-Aside">
-          {children}
-        </div>
+    <header className={classnames(className, bn())}>
+      <div className={classnames(bn('Container'), 'Container')}>
+        {children}
       </div>
     </header>
   );
 }
 
+PageHeader.Title = (props) => (
+  <Title {...props} className={bn('Title')} />
+);
+PageHeader.Aside = (props) => (
+  <div {...props} className={bn('Aside')} />
+);
+
 PageHeader.propTypes = {
-  children: PropTypes.element.isRequired,
+  className: PropTypes.string,
+  children: PropTypes.any,
 };
 
 export default PageHeader;
