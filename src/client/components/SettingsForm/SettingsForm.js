@@ -4,16 +4,26 @@ import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
 
 import './SettingsForm.scss';
+import useSettingsForm from './useSettingsForm';
 import Button from '../Button';
 import TextInput from '../TextInput';
 import NumericInput from '../NumericInput';
 
 const bn = cn('SettingsForm');
+const initialValues = {
+  repository: '',
+  command: '',
+  branch: 'master',
+  interval: '',
+};
 
 /**
  * Форма 'Настройки'
  */
-function SettingsForm({ className, onSubmit }) {
+function SettingsForm(props) {
+  const { className, onSubmit, onCancel } = props;
+  const [{ values }, handleChange] = useSettingsForm(initialValues);
+
   return (
     <section className={classnames(className, bn())}>
       <h3 className={bn('Title')}>Settings</h3>
@@ -22,44 +32,52 @@ function SettingsForm({ className, onSubmit }) {
       </p>
       <form
         className={bn('Form')}
-        action="/"
-        method="post"
-        onSubmit={onSubmit}
+        onSubmit={(event) => {
+          event.preventDefault();
+          onSubmit(values);
+        }}
       >
         <fieldset className={bn('Fieldset')}>
-          <ul className={bn('Fields')}>
-            <li className={bn('Field')}>
-              <TextInput
-                name="repository"
-                label="GitHub repository"
-                required
-              />
-            </li>
-            <li className={bn('Field')}>
-              <TextInput
-                id="command"
-                name="command"
-                label="Build command"
-              />
-            </li>
-            <li className={bn('Field')}>
-              <TextInput
-                id="branch"
-                name="branch"
-                label="Main branch"
-              />
-            </li>
-            <li className={bn('Field')}>
-              <NumericInput
-                id="interval"
-                name="interval"
-                label="Synchronize every"
-                units="minutes"
-                min="0"
-                max="1000"
-              />
-            </li>
-          </ul>
+          <TextInput
+            className={bn('Field')}
+            name="repository"
+            value={values.repository}
+            label="GitHub repository"
+            palceholder="user-name/repo-name"
+            required
+            onChange={handleChange('repository')}
+          />
+          <TextInput
+            className={bn('Field')}
+            id="command"
+            name="command"
+            value={values.command}
+            label="Build command"
+            palceholder="npm run build"
+            required
+            onChange={handleChange('command')}
+          />
+          <TextInput
+            className={bn('Field')}
+            id="branch"
+            name="branch"
+            value={values.branch}
+            label="Main branch"
+            palceholder="master"
+            onChange={handleChange('branch')}
+          />
+          <NumericInput
+            className={bn('Field')}
+            id="interval"
+            name="interval"
+            value={values.interval}
+            label="Synchronize every"
+            palceholder="0"
+            units="minutes"
+            min="0"
+            max="1000"
+            onChange={handleChange('interval')}
+          />
         </fieldset>
         <div className={bn('Footer')}>
           <Button
@@ -71,6 +89,7 @@ function SettingsForm({ className, onSubmit }) {
           <Button
             className={bn('Button')}
             label="Cancel"
+            onClick={onCancel}
           />
         </div>
       </form>
@@ -81,6 +100,7 @@ function SettingsForm({ className, onSubmit }) {
 SettingsForm.propTypes = {
   className: PropTypes.string,
   onSubmit: PropTypes.func,
+  onCancel: PropTypes.func,
 };
 
 export default SettingsForm;
