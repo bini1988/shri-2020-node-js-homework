@@ -1,52 +1,68 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { cn } from '@bem-react/classname';
+import { classnames } from '@bem-react/classnames';
 
+import './MainPage.scss';
 import PageHeader from '../PageHeader';
 import PageFooter from '../PageFooter';
+import Button from '../Button';
+
+const bn = cn('MainPage');
 
 /**
  * Страница приветствия
  */
-function MainPage() {
+function MainPage({ className, history }) {
+  const handleSettings = () => history.push('/settings');
+
   return (
-    <>
-      <PageHeader>
-        <Link
-          className="Button Button_theme_normal Button_size_s Button_adaptive"
-          to="/details"
-        >
-          <span className="Button-Wrapper">
-            <svg className="Button-Icon" width="12" height="12">
-              <use xlinkHref="#settings" />
-            </svg>
-            <span className="Button-Label">Settings</span>
-          </span>
-        </Link>
+    <div className={classnames(className, bn())}>
+      <PageHeader className={bn('Header')}>
+        <PageHeader.Title>
+          School CI server
+        </PageHeader.Title>
+        <PageHeader.Aside>
+          <Button
+            adaptive
+            label="Settings"
+            iconName="settings"
+            size="s"
+            onClick={handleSettings}
+          />
+        </PageHeader.Aside>
       </PageHeader>
-      <main className="Page-Main Main Main_align_center">
-        <div className="Main-Container Container">
-          <section className="Main-Intro Intro">
-            <div className="Intro-Wrapper">
-              <svg className="Intro-Logo" width="124" height="124">
+      <main className={bn('Main')}>
+        <div className={classnames(bn('Container'), 'Container')}>
+          <section className={bn('Intro')}>
+            <div className={bn('Wrapper')}>
+              <svg className={bn('Logo')} width="124" height="124">
                 <use xlinkHref="#logo" />
               </svg>
-              <p className="Intro-Label">
+              <p className={bn('Label')}>
                 Configure repository connection and&nbsp;synchronization settings
               </p>
-              <Link className="Intro-Settings Button Button_theme_action" to="/settings">
-                <span className="Button-Wrapper">
-                  <span className="Button-Label">
-                    Open settings
-                  </span>
-                </span>
-              </Link>
+              <Button
+                theme="action"
+                label="Open settings"
+                onClick={handleSettings}
+              />
             </div>
           </section>
         </div>
       </main>
-      <PageFooter />
-    </>
+      <PageFooter
+        className={bn('Footer')}
+      />
+    </div>
   );
 }
+
+MainPage.propTypes = {
+  className: PropTypes.string,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default MainPage;

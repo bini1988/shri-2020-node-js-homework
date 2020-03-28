@@ -1,8 +1,5 @@
 .Page {
   box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
   margin: 0;
   padding: 0;
   min-width: 320px;
@@ -21,11 +18,6 @@
   }
 }
 
-.Page-Header,
-.Page-Footer {
-  flex: 0 1 auto;
-}
-
-.Page-Main {
-  flex: 1 1 auto;
+.Page-App {
+  min-height: 100vh;
 }
