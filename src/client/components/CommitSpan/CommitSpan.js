@@ -1,23 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { cn } from '@bem-react/classname';
+import { classnames } from '@bem-react/classnames';
+
 import './CommitSpan.scss';
 
+const bn = cn('CommitSpan');
+
 function CommitSpan(props) {
-  const { branch, hash } = props;
+  const { className, branch, hash } = props;
 
   return (
-    <span className="CommitSpan">
-      <span className="CommitSpan-Label">Commit: </span>
-      <svg className="CommitSpan-Icon" width="16" height="16">
+    <span className={classnames(className, bn())}>
+      <span className={bn('Label')}>Commit: </span>
+      <svg className={bn('Icon')} width="16" height="16">
         <use xlinkHref="#code-commit" />
       </svg>
-      <span className="CommitSpan-Branch">{branch}</span>
-      <span className="CommitSpan-Hash">{hash}</span>
+      <span className={bn('Branch')}>{branch}</span>
+      <span className={bn('Hash')}>{hash}</span>
     </span>
   );
 }
 
 CommitSpan.propTypes = {
+  className: PropTypes.string,
   branch: PropTypes.string.isRequired,
   hash: PropTypes.string.isRequired,
 };
