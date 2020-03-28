@@ -34,12 +34,14 @@ function Button(props) {
 }
 
 Button.defaultProps = {
+  type: 'button',
   theme: 'normal',
 };
 Button.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
   iconName: PropTypes.string,
+  type: PropTypes.string,
   theme: PropTypes.string,
   size: PropTypes.string,
   view: PropTypes.string,
