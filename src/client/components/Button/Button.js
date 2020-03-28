@@ -9,7 +9,7 @@ const bn = cn('Button');
 
 function Button(props) {
   const {
-    className, label, theme, size, view, adaptive, ...restProps
+    className, label, iconName, theme, size, view, adaptive, ...restProps
   } = props;
   const mods = {
     theme, size, view, adaptive,
@@ -22,9 +22,11 @@ function Button(props) {
       className={classnames(className, bn(mods))}
     >
       <span className={bn('Wrapper')}>
-        <svg className={bn('Icon')} width="12" height="12">
-          <use xlinkHref="#settings" />
-        </svg>
+        {!!iconName && (
+          <svg className={bn('Icon')} width="12" height="12">
+            <use xlinkHref={`#${iconName}`} />
+          </svg>
+        )}
         <span className={bn('Label')}>{label}</span>
       </span>
     </button>
@@ -33,11 +35,11 @@ function Button(props) {
 
 Button.defaultProps = {
   theme: 'normal',
-  size: 's',
 };
 Button.propTypes = {
   className: PropTypes.string,
   label: PropTypes.string,
+  iconName: PropTypes.string,
   theme: PropTypes.string,
   size: PropTypes.string,
   view: PropTypes.string,
