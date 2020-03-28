@@ -11,12 +11,6 @@
   cursor: pointer;
 }
 
-.BuildCard:hover {
-  box-shadow:
-    0 2px 8px rgba(67, 68, 69, 0.3),
-    0 0 1px rgba(67, 68, 69, 0.3);
-}
-
 .BuildCard-Wrapper {
   display: flex;
   flex-direction: column;
@@ -136,6 +130,12 @@
   }
 }
 
+.BuildCard_interactive:hover {
+  box-shadow:
+    0 2px 8px rgba(67, 68, 69, 0.3),
+    0 0 1px rgba(67, 68, 69, 0.3);
+}
+
 .BuildCard_view_details .BuildCard-Content {
   width: 100%;
 }
@@ -150,4 +150,27 @@
   padding-top: var(--space-xs);
   width: 100%;
   border-top: 1px solid var(--color-bg-accent);
+}
+
+.BuildCard_status_Success {
+  .BuildCard-Status,
+  .BuildCard-No {
+    color: var(--color-success);
+  }
+}
+
+.BuildCard_status_Fail,
+.BuildCard_status_Canceled {
+  .BuildCard-Status,
+  .BuildCard-No {
+    color: var(--color-fail);
+  }
+}
+
+.BuildCard_status_Waiting,
+.BuildCard_status_InProgress {
+  .BuildCard-Status,
+  .BuildCard-No {
+    color: var(--color-pending);
+  }
 }
