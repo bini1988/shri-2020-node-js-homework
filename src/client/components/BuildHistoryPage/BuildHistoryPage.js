@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
@@ -8,15 +8,17 @@ import PageHeader from '../PageHeader';
 import PageFooter from '../PageFooter';
 import Button from '../Button';
 import BuildCard from '../BuildCard';
+import NewBuildDialog from '../NewBuildDialog';
 
 const bn = cn('BuildHistoryPage');
 
 /**
  * Страница 'История сборок'
  */
-function BuildHistoryPage({ className, history }) {
-  const handleBuild = () => history.push('/settings');
-  const handleSettings = () => history.push('/settings');
+function BuildHistoryPage(props) {
+  const { className, history } = props;
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const closeDialog = () => setDialogOpen(false);
 
   return (
     <div className={classnames(className, bn())}>
@@ -32,14 +34,14 @@ function BuildHistoryPage({ className, history }) {
             label="Run build"
             iconName="play"
             size="s"
-            onClick={handleBuild}
+            onClick={() => setDialogOpen(true)}
           />
           <Button
             label="Settings"
             iconName="settings"
             size="s"
             view="tile"
-            onClick={handleSettings}
+            onClick={() => history.push('/settings')}
           />
         </PageHeader.Aside>
       </PageHeader>
@@ -50,7 +52,7 @@ function BuildHistoryPage({ className, history }) {
               BuildHistoryPage
             </h3>
             <ul className={bn('Items')}>
-              {Array.from({ length: 9 }).map((id) => (
+              {Array.from({ length: 9 }).map((_, id) => (
                 <li className={bn('Item')} key={id}>
                   <BuildCard
                     interactive
@@ -71,10 +73,14 @@ function BuildHistoryPage({ className, history }) {
               className={bn('More')}
               label="Show more"
               size="s"
-              onClick={handleSettings}
             />
           </section>
         </div>
+        <NewBuildDialog
+          isOpen={isDialogOpen}
+          onCancel={closeDialog}
+          onSubmit={() => closeDialog()}
+        />
       </main>
       <PageFooter />
     </div>

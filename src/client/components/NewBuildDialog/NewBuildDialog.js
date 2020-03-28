@@ -6,13 +6,15 @@ import { cn } from '@bem-react/classname';
 import './NewBuildDialog.scss';
 import NewBuildForm from '../NewBuildForm';
 
+Modal.setAppElement('#app');
+
 const bn = cn('NewBuildDialog');
 
 /**
  * Диалог создания нового билда
  */
 function NewBuildDialog(props) {
-  const { isOpen, onCancel } = props;
+  const { isOpen, onSubmit, onCancel } = props;
 
   return (
     <Modal
@@ -33,7 +35,10 @@ function NewBuildDialog(props) {
       onRequestClose={onCancel}
     >
       <div className={bn('Content')}>
-        <NewBuildForm />
+        <NewBuildForm
+          onSubmit={onSubmit}
+          onCancel={onCancel}
+        />
       </div>
     </Modal>
   );
@@ -41,6 +46,7 @@ function NewBuildDialog(props) {
 
 NewBuildDialog.propTypes = {
   isOpen: PropTypes.bool,
+  onSubmit: PropTypes.func,
   onCancel: PropTypes.func,
 };
 
