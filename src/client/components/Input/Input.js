@@ -9,18 +9,32 @@ const bn = cn('Input');
 
 function Input(props) {
   const {
-    className, id, name, type, value, palceholder, textAlign, cleanable, onChange,
+    className,
+    id,
+    name,
+    type,
+    value,
+    palceholder,
+    min,
+    max,
+    textAlign,
+    cleanable,
+    innerRef,
+    onChange,
   } = props;
 
   return (
     <div className={classnames(className, bn({ textAlign, cleanable }))}>
       <input
+        ref={innerRef}
         className={bn('Control')}
         type={type}
         id={id}
         name={name}
         value={value}
         placeholder={palceholder}
+        min={min}
+        max={max}
         onChange={(event) => onChange(event.target.value)}
       />
       <button
@@ -51,8 +65,11 @@ Input.propTypes = {
     PropTypes.number,
   ]),
   palceholder: PropTypes.string,
+  min: PropTypes.string,
+  max: PropTypes.string,
   textAlign: PropTypes.string,
   cleanable: PropTypes.bool,
+  innerRef: PropTypes.any,
   onChange: PropTypes.func,
 };
 

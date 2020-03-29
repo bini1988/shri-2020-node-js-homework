@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import MaskedInput from 'react-text-mask';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
 
@@ -10,7 +11,7 @@ const bn = cn('NumericInput');
 
 function NumericInput(props) {
   const {
-    className, id, name, label, value, palceholder, units, onChange,
+    className, id, name, label, value, min, max, palceholder, units, onChange,
   } = props;
 
   return (
@@ -21,17 +22,22 @@ function NumericInput(props) {
             {label}
           </label>
         )}
-        <Input
+        <MaskedInput
+          mask={[/\d/, /\d/, /\d/]}
+          guide={false}
           className={bn('Control')}
           id={id}
           name={name}
           value={value}
           palceholder={palceholder}
-          type="number"
-          min="0"
-          max="1000"
+          type="text"
+          min={min}
+          max={max}
           textAlign="right"
           onChange={onChange}
+          render={(ref, forwardProps) => (
+            <Input innerRef={ref} {...forwardProps} />
+          )}
         />
         <span className={bn('Units')}>{units}</span>
       </div>
@@ -49,6 +55,8 @@ NumericInput.propTypes = {
   ]),
   label: PropTypes.string.isRequired,
   palceholder: PropTypes.string,
+  min: PropTypes.string,
+  max: PropTypes.string,
   units: PropTypes.string.isRequired,
   onChange: PropTypes.func,
 };

@@ -43,6 +43,7 @@
     "react-modal": "^3.11.2",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
+    "react-text-mask": "^5.4.3",
     "react-toast-notifications": "^2.4.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
