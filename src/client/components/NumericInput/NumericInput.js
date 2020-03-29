@@ -43,7 +43,10 @@ NumericInput.propTypes = {
   className: PropTypes.string,
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   label: PropTypes.string.isRequired,
   palceholder: PropTypes.string,
   units: PropTypes.string.isRequired,

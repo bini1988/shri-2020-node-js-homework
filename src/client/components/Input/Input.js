@@ -46,7 +46,10 @@ Input.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]),
   palceholder: PropTypes.string,
   textAlign: PropTypes.string,
   cleanable: PropTypes.bool,
