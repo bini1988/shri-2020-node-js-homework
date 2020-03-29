@@ -73,11 +73,6 @@ const common = {
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV) },
     }),
-    new HtmlWebpackPlugin({
-      template: './static/index.html',
-      filename: 'index.html',
-      minify: false,
-    }),
   ],
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
@@ -107,6 +102,11 @@ const development = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: './static/index.html',
+      filename: 'index.html',
+      minify: false,
+    }),
   ],
 };
 
