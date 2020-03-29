@@ -24,9 +24,11 @@ function BuildCard(props) {
     branchName,
     commitHash,
     authorName,
-    start,
-    duration,
+    start: startDate,
+    duration = 0,
   } = card;
+
+  const endDate = new Date(duration + (+new Date(0)));
 
   return (
     <article className={classnames(className, bn({ status, interactive, view }))}>
@@ -63,12 +65,12 @@ function BuildCard(props) {
           <DateTime
             className={bn('Time')}
             view="date"
-            dateTime={start}
+            dateTime={startDate}
           />
           <DateTime
             className={bn('Time')}
             view="time"
-            dateTime={duration}
+            dateTime={endDate}
           />
         </div>
       </div>
