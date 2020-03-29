@@ -1,0 +1,11 @@
+
+export const initialState = {
+  values: {},
+};
+
+export default function (state = initialState, action) {
+  switch (action.type) {
+  default:
+    return state;
+  }
+}
