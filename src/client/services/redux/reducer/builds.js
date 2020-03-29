@@ -22,10 +22,17 @@ export const getBuildsIds = (state) => getBuildsState(state).buildsIds;
 export const getBuildsMap = (state) => getBuildsState(state).buildsMap;
 
 /**
+ * Возвращает сборку по индентификатору
+ * @param {Object} state Глобальный объект redux store
+ * @param {string} id Индентификатор билда
+ */
+export const getBuildCardById = (state, id) => getBuildsMap(state)[id];
+
+/**
  * Список сборок
  * @param {Object} state Глобальный объект redux store
  */
-export const getBuildsItems = createSelector(
+export const getBuildsCards = createSelector(
   [getBuildsIds, getBuildsMap],
   (buildsIds, buildsMap) => buildsIds.map((id) => buildsMap[id]),
 );

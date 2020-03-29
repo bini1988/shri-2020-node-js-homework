@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
 
@@ -17,7 +18,7 @@ const bn = cn('BuildHistoryPage');
  */
 function BuildHistoryPage(props) {
   const {
-    className, history, buildsItems = [], fetchBuilds,
+    className, history, buildsCards = [], fetchBuilds,
   } = props;
   const [isDialogOpen, setDialogOpen] = useState(false);
   const closeDialog = () => setDialogOpen(false);
@@ -58,9 +59,11 @@ function BuildHistoryPage(props) {
               BuildHistoryPage
             </h3>
             <ul className={bn('Items')}>
-              {buildsItems.map((build = {}) => (
+              {buildsCards.map((build = {}) => (
                 <li className={bn('Item')} key={build.id}>
-                  <BuildCard interactive card={build} />
+                  <Link className={bn('Link')} to={`/build/${build.id}`}>
+                    <BuildCard interactive card={build} />
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -87,7 +90,7 @@ BuildHistoryPage.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
-  buildsItems: PropTypes.arrayOf(
+  buildsCards: PropTypes.arrayOf(
     PropTypes.object,
   ),
   fetchBuilds: PropTypes.func,

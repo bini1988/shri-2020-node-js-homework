@@ -8,13 +8,16 @@ import PageHeader from '../PageHeader';
 import PageFooter from '../PageFooter';
 import Button from '../Button';
 import BuildCard from '../BuildCard';
+import ConsoleLog from '../ConsoleLog';
+import log from '../../mock-data';
 
 const bn = cn('BuildDetailsPage');
 
 /**
  * Информация о сборке
  */
-function BuildDetailsPage({ className, history }) {
+function BuildDetailsPage(props) {
+  const { className, history, buildCard } = props;
   const handleSettings = () => history.push('/settings');
 
   return (
@@ -23,9 +26,7 @@ function BuildDetailsPage({ className, history }) {
         <PageHeader.Title accent>
           philip1967/my-awesome-repo
         </PageHeader.Title>
-        <PageHeader.Aside
-          className={bn('Aside')}
-        >
+        <PageHeader.Aside className={bn('Aside')}>
           <Button
             adaptive
             label="Rebuild"
@@ -50,21 +51,11 @@ function BuildDetailsPage({ className, history }) {
             <BuildCard
               className="BuildDetailsPage-Card"
               view="details"
-              card={{
-                status: 'Waiting',
-                buildNumber: 1368,
-                commitMessage: 'add documentation for postgres scaler',
-                branchName: 'master',
-                commitHash: '9c9f0b9',
-                authorName: 'Philip Kirkorov',
-                start: '2020-01-21T03:06:00.000',
-              }}
+              card={buildCard}
             />
-            <div className={bn('ConsoleLog')}>
-              <pre className={bn('Wrappper')}>
-                Log...
-              </pre>
-            </div>
+            <ConsoleLog className={bn('Log')}>
+              {log}
+            </ConsoleLog>
           </section>
         </div>
       </main>
@@ -78,6 +69,7 @@ BuildDetailsPage.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  buildCard: PropTypes.object,
 };
 
 export default BuildDetailsPage;
