@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import BuildDetailsPageView from './BuildDetailsPage';
-import { getBuildCardById } from '../../services/redux/reducer/builds';
+import { getBuildCardById, fetchBuildById } from '../../services/redux/reducer/builds';
 import { getSettingOf } from '../../services/redux/reducer/settings';
 
 function mapStateToProps(state, { match }) {
@@ -11,4 +11,4 @@ function mapStateToProps(state, { match }) {
   return { buildCard, repoName };
 }
 
-export default connect(mapStateToProps)(BuildDetailsPageView);
+export default connect(mapStateToProps, { fetchBuildById })(BuildDetailsPageView);

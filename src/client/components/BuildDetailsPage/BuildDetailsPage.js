@@ -18,14 +18,13 @@ const bn = cn('BuildDetailsPage');
  */
 function BuildDetailsPage(props) {
   const {
-    className, history, buildCard, repoName,
+    className, history, match, buildCard, repoName, fetchBuildById,
   } = props;
+  const buildId = match && match.params.id;
 
   useEffect(() => {
-    if (!buildCard) {
-      history.push('/history');
-    }
-  }, [history, buildCard]);
+    fetchBuildById(buildId);
+  }, []);
 
   return (
     <div className={classnames(className, bn())}>
@@ -76,8 +75,14 @@ BuildDetailsPage.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
   buildCard: PropTypes.object,
   repoName: PropTypes.string,
+  fetchBuildById: PropTypes.func,
 };
 
 export default BuildDetailsPage;

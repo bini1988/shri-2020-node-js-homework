@@ -3,6 +3,7 @@ import Api from '../../api';
 
 export const BUILDS_STORAGE_KEY = 'builds';
 export const STORE_BUILDS = '@builds/STORE_BUILDS';
+export const STORE_BUILD = '@builds/STORE_BUILD';
 
 /**
  * @param {Object} state Глобальный объект redux store
@@ -47,6 +48,14 @@ export function storeBuilds(payload) {
 }
 
 /**
+ * Сохранить билд
+ * @param {Object[]} payload
+ */
+export function storeBuild(payload) {
+  return { type: STORE_BUILD, payload };
+}
+
+/**
  * Получить список билдов
  * @param {Number} offset Смещение от начала списка
  * @param {Number} limit Количество возвращаемых элементов
@@ -58,6 +67,28 @@ export function fetchBuilds(offset, limit) {
       dispatch(storeBuilds(data));
     });
 }
+
+/**
+ * Получить билд по индетификатору
+ * @param {string} id Индетификатор билда
+ * @return {Promise}
+ */
+export function fetchBuildById(id) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const card = getBuildCardById(state, id);
+
+    if (card) {
+      return Promise.resolve(card);
+    }
+    return Api.Builds.fetchBuildById(id)
+      .then(({ data }) => {
+        dispatch(storeBuild(data));
+        return data;
+      });
+  };
+}
+
 
 /**
  * Поставить билд в очередь
@@ -84,6 +115,14 @@ export default function (state = initialState, action) {
         out[build.id] = build;
         return out;
       }, {}),
+    };
+  case STORE_BUILD:
+    return {
+      ...state,
+      buildsMap: {
+        ...state.buildsMap,
+        [action.payload.id]: action.payload,
+      },
     };
   default:
     return state;
