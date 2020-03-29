@@ -1,4 +1,5 @@
 const EventEmitter = require('events');
+const buildLogMock = require('../mocks/mock-build-log');
 
 function sleep(timeout = 200) {
   return new Promise((resolve) => {
@@ -40,15 +41,9 @@ class CIBuilder extends EventEmitter {
 
     await sleep(100); // Эмуляция сборки
 
-    const duration = Math.floor(Math.random() * 60 * 60); // сек
+    const duration = Math.floor(Math.random() * 2 * 60 * 60 * 1000); // мсек
     const success = (Math.random() > 0.5);
-    const buildLog = `
-      BuildId: ${buildId}
-      Pwd: ${pwd}
-      Command: ${cmd}
-      Duration: ${duration}
-      Status: ${success}
-    `;
+    const buildLog = buildLogMock;
     const finishParams = {
       buildId, duration, success, buildLog,
     };
