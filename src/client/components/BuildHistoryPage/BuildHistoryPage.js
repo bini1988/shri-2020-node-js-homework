@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
@@ -16,9 +16,15 @@ const bn = cn('BuildHistoryPage');
  * Страница 'История сборок'
  */
 function BuildHistoryPage(props) {
-  const { className, history } = props;
+  const {
+    className, history, buildsItems = [], fetchBuilds,
+  } = props;
   const [isDialogOpen, setDialogOpen] = useState(false);
   const closeDialog = () => setDialogOpen(false);
+
+  useEffect(() => {
+    fetchBuilds();
+  }, []);
 
   return (
     <div className={classnames(className, bn())}>
@@ -52,20 +58,9 @@ function BuildHistoryPage(props) {
               BuildHistoryPage
             </h3>
             <ul className={bn('Items')}>
-              {Array.from({ length: 9 }).map((_, id) => (
-                <li className={bn('Item')} key={id}>
-                  <BuildCard
-                    interactive
-                    card={{
-                      status: 'Waiting',
-                      buildNumber: 1368,
-                      commitMessage: 'add documentation for postgres scaler',
-                      branchName: 'master',
-                      commitHash: '9c9f0b9',
-                      authorName: 'Philip Kirkorov',
-                      start: '2020-01-21T03:06:00.000',
-                    }}
-                  />
+              {buildsItems.map((build = {}) => (
+                <li className={bn('Item')} key={build.id}>
+                  <BuildCard interactive card={build} />
                 </li>
               ))}
             </ul>
@@ -92,6 +87,10 @@ BuildHistoryPage.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  buildsItems: PropTypes.arrayOf(
+    PropTypes.object,
+  ),
+  fetchBuilds: PropTypes.func,
 };
 
 export default BuildHistoryPage;
