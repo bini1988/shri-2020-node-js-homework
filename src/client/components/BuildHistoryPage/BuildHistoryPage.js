@@ -18,7 +18,7 @@ const bn = cn('BuildHistoryPage');
  */
 function BuildHistoryPage(props) {
   const {
-    className, history, buildsCards = [], fetchBuilds,
+    className, history, buildsCards = [], fetchBuilds, queueBuild,
   } = props;
   const [isDialogOpen, setDialogOpen] = useState(false);
   const closeDialog = () => setDialogOpen(false);
@@ -79,7 +79,14 @@ function BuildHistoryPage(props) {
         <NewBuildDialog
           isOpen={isDialogOpen}
           onCancel={closeDialog}
-          onSubmit={() => closeDialog()}
+          onSubmit={({ commit }) => {
+            closeDialog();
+            if (commit) {
+              queueBuild(commit).then(({ buildId }) => {
+                history.push(`/build/${buildId}`);
+              });
+            }
+          }}
         />
       </main>
       <PageFooter />
@@ -96,6 +103,7 @@ BuildHistoryPage.propTypes = {
     PropTypes.object,
   ),
   fetchBuilds: PropTypes.func,
+  queueBuild: PropTypes.func,
 };
 
 export default BuildHistoryPage;

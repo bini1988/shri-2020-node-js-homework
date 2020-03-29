@@ -24,8 +24,8 @@ function CommitSpan(props) {
 
 CommitSpan.propTypes = {
   className: PropTypes.string,
-  branch: PropTypes.string.isRequired,
-  hash: PropTypes.string.isRequired,
+  branch: PropTypes.string,
+  hash: PropTypes.string,
 };
 
 export default CommitSpan;

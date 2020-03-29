@@ -20,7 +20,10 @@ export const getSettingsValues = (state) => getSettingsState(state).values;
  * @param {Object} state Глобальный объект redux store
  * @param {string} name Имя настройки
  */
-export const getSettingOf = (state, name) => getSettingsValues(state)[name];
+export const getSettingOf = (state, name) => {
+  const settings = getSettingsValues(state);
+  return settings && settings[name];
+};
 
 /**
  * Сохранить настройки

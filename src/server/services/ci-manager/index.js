@@ -60,9 +60,12 @@ class CIManager extends EventEmitter {
       const [{ id: buildId }] = await api.Build.fetchBuilds(0, 1);
 
       this.builder.execute({ buildId, cmd: buildCommand, pwd });
+
+      return buildId;
     } catch (error) {
       logger.error('Execution run build error\n', error);
     }
+    return null;
   }
 }
 

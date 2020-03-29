@@ -59,6 +59,15 @@ export function fetchBuilds(offset, limit) {
     });
 }
 
+/**
+ * Поставить билд в очередь
+ * @param {string} [commitHash] Хэш коммита
+ * @return {Promise}
+ */
+export function queueBuild(commitHash) {
+  return () => Api.Builds.queueBuild(commitHash);
+}
+
 export const initialState = {
   buildsIds: [],
   buildsMap: {},

@@ -23,7 +23,7 @@ function OwnerSpan(props) {
 
 OwnerSpan.propTypes = {
   className: PropTypes.string,
-  owner: PropTypes.string.isRequired,
+  owner: PropTypes.string,
 };
 
 export default OwnerSpan;
