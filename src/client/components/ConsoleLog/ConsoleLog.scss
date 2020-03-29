@@ -1,0 +1,20 @@
+
+.ConsoleLog {
+  padding: 8px 12px;
+  min-height: 60px;
+  border-radius: 6px;
+  background-color: var(--color-bg-control-disabled);
+}
+
+.ConsoleLog-Wrappper {
+  margin: 0;
+  padding: 0;
+  min-width: 100%;
+  color: var(--color-text-primary);
+
+  font-family: Hack, monospace;
+  font-size: 10px;
+  line-height: var(--text-line-height-l);
+
+  overflow-x: auto;
+}
