@@ -41,9 +41,21 @@ export function fetchSettings() {
     });
 }
 
+/**
+ * Сохранить настройки
+ * @param {Object} values Объект настроек
+ * @return {Promise}
+ */
+export function saveSettings(values) {
+  return (dispatch) => Api.Settings.saveSettings(values)
+    .then(() => {
+      dispatch(storeSettings(values));
+    });
+}
+
 export const initialState = {
   /** Объект настроек */
-  values: {},
+  values: undefined,
 };
 
 export default function (state = initialState, action) {

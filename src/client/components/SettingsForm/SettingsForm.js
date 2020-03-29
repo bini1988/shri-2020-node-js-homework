@@ -10,19 +10,19 @@ import TextInput from '../TextInput';
 import NumericInput from '../NumericInput';
 
 const bn = cn('SettingsForm');
-const initialValues = {
-  repository: '',
-  command: '',
-  branch: 'master',
-  interval: '',
-};
 
 /**
  * Форма 'Настройки'
  */
 function SettingsForm(props) {
-  const { className, onSubmit, onCancel } = props;
-  const [{ values }, handleChange] = useSettingsForm(initialValues);
+  const {
+    className, initialSettings: initialValues, onSubmit, onCancel,
+  } = props;
+  const [
+    { values, errors, submitting },
+    handleChange,
+    handelSubmit,
+  ] = useSettingsForm({ initialValues, onSubmit });
 
   return (
     <section className={classnames(className, bn())}>
@@ -30,53 +30,47 @@ function SettingsForm(props) {
       <p className={bn('Text')}>
         Configure repository connection and synchronization settings.
       </p>
-      <form
-        className={bn('Form')}
-        onSubmit={(event) => {
-          event.preventDefault();
-          onSubmit(values);
-        }}
-      >
+      <form className={bn('Form')} onSubmit={handelSubmit}>
         <fieldset className={bn('Fieldset')}>
           <TextInput
             className={bn('Field')}
-            name="repository"
-            value={values.repository}
+            name="repoName"
+            value={values.repoName}
             label="GitHub repository"
             palceholder="user-name/repo-name"
             required
-            onChange={handleChange('repository')}
+            onChange={handleChange('repoName')}
           />
           <TextInput
             className={bn('Field')}
-            id="command"
-            name="command"
-            value={values.command}
+            id="buildCommand"
+            name="buildCommand"
+            value={values.buildCommand}
             label="Build command"
             palceholder="npm run build"
             required
-            onChange={handleChange('command')}
+            onChange={handleChange('buildCommand')}
           />
           <TextInput
             className={bn('Field')}
-            id="branch"
-            name="branch"
-            value={values.branch}
+            id="mainBranch"
+            name="mainBranch"
+            value={values.mainBranch}
             label="Main branch"
             palceholder="master"
-            onChange={handleChange('branch')}
+            onChange={handleChange('mainBranch')}
           />
           <NumericInput
             className={bn('Field')}
-            id="interval"
-            name="interval"
-            value={values.interval}
+            id="period"
+            name="period"
+            value={values.period}
             label="Synchronize every"
-            palceholder="0"
+            palceholder="999"
             units="minutes"
             min="0"
-            max="1000"
-            onChange={handleChange('interval')}
+            max="999"
+            onChange={handleChange('period')}
           />
         </fieldset>
         <div className={bn('Footer')}>
@@ -85,10 +79,12 @@ function SettingsForm(props) {
             theme="action"
             label="Save"
             type="submit"
+            disabled={!!errors || submitting}
           />
           <Button
             className={bn('Button')}
             label="Cancel"
+            disabled={submitting}
             onClick={onCancel}
           />
         </div>
@@ -99,6 +95,7 @@ function SettingsForm(props) {
 
 SettingsForm.propTypes = {
   className: PropTypes.string,
+  initialSettings: PropTypes.object,
   onSubmit: PropTypes.func,
   onCancel: PropTypes.func,
 };

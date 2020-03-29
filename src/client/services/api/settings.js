@@ -8,3 +8,12 @@ import axios from './axios';
 export function fetchSettings() {
   return axios.get('/settings');
 }
+
+/**
+ * Сохранить настройки
+ * @param {Object} values Объект настроек
+ * @return {Promise}
+ */
+export function saveSettings(values) {
+  return axios.post('/settings', values);
+}

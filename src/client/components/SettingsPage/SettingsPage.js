@@ -4,6 +4,7 @@ import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
 
 import './SettingsPage.scss';
+import useNotification from '../../hooks/useNotification';
 import PageHeader from '../PageHeader';
 import PageFooter from '../PageFooter';
 import SettingsForm from '../SettingsForm';
@@ -13,7 +14,13 @@ const bn = cn('SettingsPage');
 /**
  * Страница 'Настройки'
  */
-function SettingsPage({ className }) {
+function SettingsPage(props) {
+  const { className, settings, saveSettings } = props;
+  const { onError, onSuccess } = useNotification();
+  const handleSubmit = (values) => saveSettings(values)
+    .then(() => onSuccess('Settings successfully saved'))
+    .catch((error) => onError(error.message));
+
   return (
     <div className={classnames(className, bn())}>
       <PageHeader className={bn('Header')}>
@@ -23,7 +30,11 @@ function SettingsPage({ className }) {
       </PageHeader>
       <main className={bn('Main')}>
         <div className={classnames(bn('Container'), 'Container')}>
-          <SettingsForm className={bn('Settings')} />
+          <SettingsForm
+            className={bn('Settings')}
+            initialSettings={settings}
+            onSubmit={handleSubmit}
+          />
         </div>
       </main>
       <PageFooter
@@ -35,6 +46,8 @@ function SettingsPage({ className }) {
 
 SettingsPage.propTypes = {
   className: PropTypes.string,
+  settings: PropTypes.object,
+  saveSettings: PropTypes.func,
 };
 
 export default SettingsPage;
