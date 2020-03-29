@@ -10,7 +10,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const ROOT = path.resolve(__dirname, ".");
 const CACHE_DIR_PATH = path.resolve(ROOT, ".", "node_modules", ".cache");
@@ -18,7 +17,6 @@ const POSTCSS_CONFIG_PATH = path.resolve(ROOT, "./postcss.config.js");
 
 const OUTPUT_PATH = path.resolve(__dirname, './static');
 const IS_PRODUCTION = (process.env.NODE_ENV === 'production');
-const WITH_HASH = IS_PRODUCTION ? ".[contenthash]" : "";
 
 /**
  * Common Webpack Config
@@ -118,8 +116,8 @@ const production = {
   output: {
     path: OUTPUT_PATH,
     publicPath: '/',
-    filename: `[name].bundle${WITH_HASH}.min.js`,
-    chunkFilename: `[name].chunk${WITH_HASH}.min.js`,
+    filename: `[name].bundle.min.js`,
+    chunkFilename: `[name].chunk.min.js`,
     pathinfo: true,
   },
   devtool: false,
@@ -159,13 +157,8 @@ const production = {
   },
   plugins: [
     new ProgressBarPlugin(),
-    // new CleanWebpackPlugin({
-    //   cleanOnceBeforeBuildPatterns: [
-    //     `${DEST}/${PRJ_NAME}/**/*`
-    //   ],
-    // }),
     new MiniCssExtractPlugin({
-      filename: `[name].style${WITH_HASH}.min.css`,
+      filename: `[name].style.min.css`,
     }),
     new BundleAnalyzerPlugin({
       // Can be `server`, `static` or `disabled`.
