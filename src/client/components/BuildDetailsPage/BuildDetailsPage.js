@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
@@ -17,14 +17,21 @@ const bn = cn('BuildDetailsPage');
  * Информация о сборке
  */
 function BuildDetailsPage(props) {
-  const { className, history, buildCard } = props;
-  const handleSettings = () => history.push('/settings');
+  const {
+    className, history, buildCard, repoName,
+  } = props;
+
+  useEffect(() => {
+    if (!buildCard) {
+      history.push('/history');
+    }
+  }, [history, buildCard]);
 
   return (
     <div className={classnames(className, bn())}>
       <PageHeader className={bn('Header')}>
         <PageHeader.Title accent>
-          philip1967/my-awesome-repo
+          {repoName}
         </PageHeader.Title>
         <PageHeader.Aside className={bn('Aside')}>
           <Button
@@ -38,7 +45,7 @@ function BuildDetailsPage(props) {
             iconName="settings"
             size="s"
             view="tile"
-            onClick={handleSettings}
+            onClick={() => history.push('/settings')}
           />
         </PageHeader.Aside>
       </PageHeader>
@@ -70,6 +77,7 @@ BuildDetailsPage.propTypes = {
     push: PropTypes.func,
   }).isRequired,
   buildCard: PropTypes.object,
+  repoName: PropTypes.string,
 };
 
 export default BuildDetailsPage;

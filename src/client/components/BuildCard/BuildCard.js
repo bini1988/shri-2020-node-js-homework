@@ -14,7 +14,9 @@ const bn = cn('BuildCard');
  * Карточка сборки
  */
 function BuildCard(props) {
-  const { className, interactive, view, card = {} } = props;
+  const {
+    className, interactive, view, card = {},
+  } = props;
   const {
     status,
     buildNumber = '--',
@@ -97,7 +99,7 @@ BuildCard.propTypes = {
     authorName: PropTypes.string,
     start: PropTypes.string,
     duration: PropTypes.number,
-  }).isRequired,
+  }),
 };
 
 export default BuildCard;

@@ -1,6 +1,9 @@
 import { combineReducers } from 'redux';
 
-import settings from './settings';
-import builds from './builds';
+import settings, { SETTINGS_STORAGE_KEY } from './settings';
+import builds, { BUILDS_STORAGE_KEY } from './builds';
 
-export default combineReducers({ settings, builds });
+export default combineReducers({
+  [SETTINGS_STORAGE_KEY]: settings,
+  [BUILDS_STORAGE_KEY]: builds,
+});

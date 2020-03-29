@@ -1,13 +1,14 @@
 import { createSelector } from 'reselect';
 import Api from '../../api';
 
-const STORE_BUILDS = '@builds/STORE_BUILDS';
+export const BUILDS_STORAGE_KEY = 'builds';
+export const STORE_BUILDS = '@builds/STORE_BUILDS';
 
 /**
  * @param {Object} state Глобальный объект redux store
  * @returns {typeof initialState}
  */
-export const getBuildsState = (state) => state.builds;
+export const getBuildsState = (state) => state[BUILDS_STORAGE_KEY];
 
 /**
  * Список индентификаторов сборок
