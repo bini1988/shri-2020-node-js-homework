@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 function getValuesOrDefaults(initialValues = {}) {
   const {
@@ -24,6 +24,7 @@ function validateValues(values) {
 }
 
 function useSettingsForm({ initialValues, onSubmit }) {
+  const isMounted = useRef(true);
   const [submitting, setSubmitting] = useState(false);
   const [values, setValues] = useState(getValuesOrDefaults(initialValues));
   const errors = validateValues(values);
@@ -31,6 +32,8 @@ function useSettingsForm({ initialValues, onSubmit }) {
   useEffect(() => {
     setValues(getValuesOrDefaults(initialValues));
   }, [initialValues]);
+
+  useEffect(() => () => { isMounted.current = false; }, []);
 
   const handleChangeOf = (name) => (value) => {
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
@@ -42,10 +45,14 @@ function useSettingsForm({ initialValues, onSubmit }) {
     setSubmitting(true);
 
     onSubmit(values).then((result) => {
-      setSubmitting(false);
+      if (isMounted.current) {
+        setSubmitting(false);
+      }
       return result;
     }).catch((error) => {
-      setSubmitting(false);
+      if (isMounted.current) {
+        setSubmitting(false);
+      }
       throw error;
     });
   };

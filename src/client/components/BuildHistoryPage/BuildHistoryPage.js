@@ -67,11 +67,13 @@ function BuildHistoryPage(props) {
                 </li>
               ))}
             </ul>
-            <Button
-              className={bn('More')}
-              label="Show more"
-              size="s"
-            />
+            {(buildsCards > 0) && (
+              <Button
+                className={bn('More')}
+                label="Show more"
+                size="s"
+              />
+            )}
           </section>
         </div>
         <NewBuildDialog

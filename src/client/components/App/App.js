@@ -1,20 +1,21 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter, Switch, Route, Redirect,
+} from 'react-router-dom';
 import '../../common/sass/blocks.scss';
 
-import MainPage from '../MainPage';
+import IndexPage from '../IndexPage';
 import SettingsPage from '../SettingsPage';
-import BuildHistoryPage from '../BuildHistoryPage';
 import BuildDetailsPage from '../BuildDetailsPage';
 
 function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={MainPage} />
-        <Route exact path="/settings" component={SettingsPage} />
-        <Route exact path="/history" component={BuildHistoryPage} />
-        <Route exact path="/details" component={BuildDetailsPage} />
+        <Route exact path="/" component={IndexPage} />
+        <Route path="/settings" component={SettingsPage} />
+        <Route path="/build/:id" component={BuildDetailsPage} />
+        <Route render={() => <Redirect to="/" />} />
       </Switch>
     </BrowserRouter>
   );

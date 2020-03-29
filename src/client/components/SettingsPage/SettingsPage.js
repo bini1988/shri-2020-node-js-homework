@@ -15,11 +15,16 @@ const bn = cn('SettingsPage');
  * Страница 'Настройки'
  */
 function SettingsPage(props) {
-  const { className, settings, saveSettings } = props;
+  const {
+    className, history, settings, saveSettings,
+  } = props;
+
   const { onError, onSuccess } = useNotification();
   const handleSubmit = (values) => saveSettings(values)
-    .then(() => onSuccess('Settings successfully saved'))
-    .catch((error) => onError(error.message));
+    .then(() => {
+      onSuccess('Settings successfully saved');
+      history.push('/history');
+    }).catch((error) => onError(error.message));
 
   return (
     <div className={classnames(className, bn())}>
@@ -34,6 +39,7 @@ function SettingsPage(props) {
             className={bn('Settings')}
             initialSettings={settings}
             onSubmit={handleSubmit}
+            onCancel={() => history.goBack()}
           />
         </div>
       </main>
@@ -46,6 +52,10 @@ function SettingsPage(props) {
 
 SettingsPage.propTypes = {
   className: PropTypes.string,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+    goBack: PropTypes.func,
+  }).isRequired,
   settings: PropTypes.object,
   saveSettings: PropTypes.func,
 };
