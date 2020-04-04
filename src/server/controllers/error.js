@@ -7,6 +7,7 @@ function handleErrors(err, req, res, _next) {
   const { method, url } = req;
 
   logger.error(`Request error [${method}] '${url}'`);
+  logger.error('Error: ', err.reason);
 
   if (err instanceof ValidationError) {
     return res.status(400).json({
@@ -17,7 +18,7 @@ function handleErrors(err, req, res, _next) {
   if (err instanceof NotFoundError) {
     return res.status(404).json({
       error: 'NotFoundError',
-      message: `The requested resource '${url}' was not found on this server`,
+      message: err.message || `The requested resource '${url}' was not found on this server`,
     });
   }
   return res.status(500).json({
