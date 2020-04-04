@@ -2,7 +2,6 @@ const _ = require('lodash');
 const asyncHandler = require('express-async-handler');
 const ValidationError = require('../../services/errors/validation-error');
 const api = require('../../services/ci-api');
-const CIManager = require('../../services/ci-manager');
 
 /**
  * Возвращает переданные настройки
@@ -37,7 +36,7 @@ module.exports = asyncHandler(async (req, res) => {
   const settings = parseSettings(req.body);
 
   await api.Settings.save(settings);
-  const data = await CIManager.run(settings);
 
-  res.status(200).json({ data });
+  req.app.locals.ci.setup(settings);
+  res.status(200).end();
 });

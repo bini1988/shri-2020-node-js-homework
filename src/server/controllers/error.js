@@ -7,7 +7,7 @@ function handleErrors(err, req, res, _next) {
   const { method, url } = req;
 
   logger.error(`Request error [${method}] '${url}'`);
-  logger.error('Error: ', err.reason);
+  logger.error('Error: ', err.reason || err);
 
   if (err instanceof ValidationError) {
     return res.status(400).json({
