@@ -56,10 +56,11 @@ class CIManager extends EventEmitter {
       const params = await this.repo.meta(mainBranch);
       const pwd = this.repo.path;
 
-      await api.Build.queueBuild(params);
-      const [{ id: buildId }] = await api.Build.fetchBuilds(0, 1);
+      const { data: { data } = {} } = await api.Build.queueBuild(params);
 
-      this.builder.execute({ buildId, cmd: buildCommand, pwd });
+      this.builder.execute({ buildId: data.id, cmd: buildCommand, pwd });
+
+      return data;
     } catch (error) {
       logger.error('Execution run build error\n', error);
     }
