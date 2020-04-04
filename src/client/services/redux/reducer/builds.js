@@ -4,6 +4,7 @@ import Api from '../../api';
 export const BUILDS_STORAGE_KEY = 'builds';
 export const STORE_BUILDS = '@builds/STORE_BUILDS';
 export const STORE_BUILD = '@builds/STORE_BUILD';
+export const STORE_BUILD_LOG = '@builds/STORE_BUILD_LOG';
 
 /**
  * @param {Object} state Глобальный объект redux store
@@ -24,11 +25,24 @@ export const getBuildsIds = (state) => getBuildsState(state).buildsIds;
 export const getBuildsMap = (state) => getBuildsState(state).buildsMap;
 
 /**
+ * Map-объект логов
+ * @param {Object} state Глобальный объект redux store
+ */
+export const getBuildsLogsMap = (state) => getBuildsState(state).buildsLogsMap;
+
+/**
  * Возвращает сборку по индентификатору
  * @param {Object} state Глобальный объект redux store
  * @param {string} id Индентификатор билда
  */
 export const getBuildCardById = (state, id) => getBuildsMap(state)[id];
+
+/**
+ * Возвращает лог сборки по индентификатору
+ * @param {Object} state Глобальный объект redux store
+ * @param {string} id Индентификатор билда
+ */
+export const getBuildLogsById = (state, id) => getBuildsLogsMap(state)[id];
 
 /**
  * Список сборок
@@ -53,6 +67,15 @@ export function storeBuilds(payload) {
  */
 export function storeBuild(payload) {
   return { type: STORE_BUILD, payload };
+}
+
+/**
+ * Сохранить лог билда
+ * @param {string} id Индентификатор билда
+ * @param {string} payload Лог билда
+ */
+export function storeBuildLog(id, payload) {
+  return { type: STORE_BUILD_LOG, meta: { id }, payload };
 }
 
 /**
@@ -89,6 +112,27 @@ export function fetchBuildById(id) {
   };
 }
 
+/**
+ * Получить логи билда по индетификатору
+ * @param {string} id Индетификатор билда
+ * @return {Promise}
+ */
+export function fetchBuildLogsById(id) {
+  return (dispatch, getState) => {
+    const state = getState();
+    const logs = getBuildLogsById(state, id);
+
+    if (logs) {
+      return Promise.resolve(logs);
+    }
+    return Api.Builds.fetchBuildLogsById(id)
+      .then(({ data }) => {
+        dispatch(storeBuildLog(id, data));
+        return data;
+      });
+  };
+}
+
 
 /**
  * Поставить билд в очередь
@@ -102,6 +146,7 @@ export function queueBuild(commitHash) {
 export const initialState = {
   buildsIds: [],
   buildsMap: {},
+  buildsLogsMap: {},
 };
 
 export default function (state = initialState, action) {
@@ -122,6 +167,14 @@ export default function (state = initialState, action) {
       buildsMap: {
         ...state.buildsMap,
         [action.payload.id]: action.payload,
+      },
+    };
+  case STORE_BUILD_LOG:
+    return {
+      ...state,
+      buildsLogsMap: {
+        ...state.buildsLogsMap,
+        [action.meta.id]: action.payload,
       },
     };
   default:

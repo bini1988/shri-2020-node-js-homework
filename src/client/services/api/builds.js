@@ -13,12 +13,20 @@ export function fetchBuilds(offset, limit) {
 
 /**
  * Получить билд
- * @param {Number} offset Смещение от начала списка
- * @param {Number} limit Количество возвращаемых элементов
+ * @param {string} id Индентификатор билда
  * @return {Promise}
  */
 export function fetchBuildById(id) {
   return axios.get(`/builds/${id}`);
+}
+
+/**
+ * Получить логи билда
+ * @param {string} id Индентификатор билда
+ * @return {Promise}
+ */
+export function fetchBuildLogsById(id) {
+  return axios.get(`/builds/${id}/logs`);
 }
 
 /**

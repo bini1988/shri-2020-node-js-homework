@@ -9,7 +9,6 @@ import PageFooter from '../PageFooter';
 import Button from '../Button';
 import BuildCard from '../BuildCard';
 import ConsoleLog from '../ConsoleLog';
-import log from '../../mock-data';
 
 const bn = cn('BuildDetailsPage');
 
@@ -18,12 +17,13 @@ const bn = cn('BuildDetailsPage');
  */
 function BuildDetailsPage(props) {
   const {
-    className, history, match, buildCard, repoName, fetchBuildById,
+    className, history, match, buildCard, buildLogs, repoName, fetchBuildById, fetchBuildLogsById,
   } = props;
   const buildId = match && match.params.id;
 
   useEffect(() => {
     fetchBuildById(buildId);
+    fetchBuildLogsById(buildId);
   }, []);
 
   return (
@@ -60,7 +60,7 @@ function BuildDetailsPage(props) {
               card={buildCard}
             />
             <ConsoleLog className={bn('Log')}>
-              {log}
+              {buildLogs || "Loading log..."}
             </ConsoleLog>
           </section>
         </div>
@@ -81,8 +81,10 @@ BuildDetailsPage.propTypes = {
     }),
   }),
   buildCard: PropTypes.object,
+  buildLogs: PropTypes.string,
   repoName: PropTypes.string,
   fetchBuildById: PropTypes.func,
+  fetchBuildLogsById: PropTypes.func,
 };
 
 export default BuildDetailsPage;
