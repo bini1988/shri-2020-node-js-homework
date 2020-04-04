@@ -18,7 +18,7 @@ module.exports = asyncHandler(async (req, res) => {
   if (!_.isInteger(limit)) {
     throw new ValidationError('Invalid [limit] query parameter');
   }
-  const data = await api.Build.fetchBuilds(offset, limit);
+  const { data } = await api.Build.fetchBuilds(offset, limit);
 
-  res.status(200).json({ data });
+  res.status(200).json(data);
 });

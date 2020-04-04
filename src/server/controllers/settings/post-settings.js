@@ -37,8 +37,7 @@ module.exports = asyncHandler(async (req, res) => {
   const settings = parseSettings(req.body);
 
   await api.Settings.save(settings);
+  const data = await CIManager.run(settings);
 
-  CIManager.run(settings);
-
-  res.status(200).end();
+  res.status(200).json({ data });
 });

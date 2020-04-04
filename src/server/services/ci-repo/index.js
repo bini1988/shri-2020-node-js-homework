@@ -1,4 +1,5 @@
 const util = require('util');
+const path = require('path');
 const fs = require('fs');
 const exec = require('../utils/exec');
 
@@ -14,7 +15,7 @@ class CIRepo {
     this.base = base || 'https://github.com/';
     this.name = name;
     this.branch = 'master';
-    this.path = `${TMP_DIR}/${name}`;
+    this.path = path.join(TMP_DIR, 'repos', name);
     this.url = `${this.base}${name}.git`;
   }
 

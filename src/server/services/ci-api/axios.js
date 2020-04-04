@@ -8,13 +8,8 @@ const API_TOKEN = process.env.API_TOKEN || '';
 
 const instance = axios.create({
   baseURL: API_URL,
-  timeout: 1000,
   headers: { Authorization: `Bearer ${API_TOKEN}` },
   httpsAgent: new https.Agent({ rejectUnauthorized: false }),
 });
-
-instance.interceptors.response.use(
-  (response) => response.data && response.data.data,
-);
 
 module.exports = instance;
