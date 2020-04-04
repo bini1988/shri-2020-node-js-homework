@@ -11,8 +11,8 @@ const SPLIT_CHAR = '<##>';
  * Работа с локальной копией репозитория
  */
 class CIRepo {
-  constructor(name = '', base) {
-    this.base = base || 'https://github.com/';
+  constructor(name = '', base = 'https://github.com/') {
+    this.base = base;
     this.name = name;
     this.branch = 'master';
     this.path = path.join(TMP_DIR, 'repos', name);
@@ -25,7 +25,7 @@ class CIRepo {
   async clone() {
     try {
       await access(this.path, fs.constants.F_OK);
-      await exec('git pull --all', this.path);
+      await exec('git pull --all');
       return this;
     } catch (error) {
       // Делаем локальную копию репозитория во временную директорию
@@ -35,53 +35,56 @@ class CIRepo {
   }
 
   /**
-   * Существует ли переданный коммит
-   * @param {string} name Хэш коммита или имя ветки
+   * Существует ли переданный коммит или ветка
+   * @param {string} commitHash Хэш коммита или имя ветки
+   * @return {boolean}
    */
-  async isExist(name = '') {
+  async checkCommit(commitHash = '') {
     try {
-      const cmd = `git -C ${this.path} cat-file -t ${name}`;
-      const out = await exec(cmd, this.path);
+      const cmd = `git -C ${this.path} cat-file -t ${commitHash}`;
+      const out = await exec(cmd);
 
       return (out === 'commit');
     } catch (error) {
-      throw new Error(`CIRepo: Can not found commit or branch ${name}\n`);
+      throw new Error(`CIRepo: Can not found commit or branch ${commitHash}\n`);
     }
   }
 
   /**
    * Перейти к заданной ветке/коммиту
-   * @param {string} target Название ветки или хэш коммита
+   * @param {string} branch Название ветки или хэш коммита
    */
-  async checkout(target) {
-    await exec(`git -C ${this.path} checkout ${target}`, this.path);
+  async checkout(branch) {
+    await exec(`git -C ${this.path} checkout ${branch}`);
   }
 
   /**
    * Возвращает имя ветки
    * @param {string} hash Название ветки или хэш коммита
+   * @return {string}
    */
-  async getBranchByCommit(hash) {
+  async parseBranchName(hash) {
     const cmd = `git -C ${this.path} branch --contains ${hash} -r`;
-    const output = await exec(cmd, this.path);
+    const output = await exec(cmd);
 
     return output ? output.replace(/(\r\n|\n|\r)/gm, '').split('/').pop() : '';
   }
 
   /**
-   * Вернуть мета информацию репозитория
-   * @param {string} [target] Название ветки или хэш коммита
+   * Вернуть мета информацию для заданной ветки или хэш коммита
+   * @param {string} [hash] Название ветки или хэш коммита
+   * @return {Object}
    */
-  async meta(target = this.branch) {
-    await this.isExist(target);
-    await this.checkout(target);
+  async parseBranchMeta(hash = this.branch) {
+    await this.checkCommit(hash);
+    await this.checkout(hash);
 
     const format = `"%h${SPLIT_CHAR}%an${SPLIT_CHAR}%s"`;
     const cmd = `git -C ${this.path} log -n 1 --pretty=format:${format}`;
 
-    const log = await exec(cmd, this.path);
+    const log = await exec(cmd);
     const [commitHash, authorName, commitMessage] = log.split(SPLIT_CHAR);
-    const branchName = await this.getBranchByCommit(target);
+    const branchName = await this.parseBranchName(hash);
 
     return {
       commitMessage,
