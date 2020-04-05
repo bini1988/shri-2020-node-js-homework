@@ -3,15 +3,12 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import reducer from './reducer';
 
-const initialState = window.__INITIAL_STATE__;
-
-delete window.__INITIAL_STATE__;
-
 /**
  * Создает объект Redux store
+ * @param {Object} initialState Исходный объек состояния redux store
  * @return {Object} Объект redux store
  */
-export function createReduxStore() {
+export default function createReduxStore(initialState) {
   let composeEnhancers = compose;
 
   if (process.env.NODE_ENV === 'development') {
@@ -28,5 +25,3 @@ export function createReduxStore() {
   );
   return store;
 }
-
-export default createReduxStore();
