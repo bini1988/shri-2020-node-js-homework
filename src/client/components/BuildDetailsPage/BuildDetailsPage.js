@@ -60,7 +60,7 @@ function BuildDetailsPage(props) {
               card={buildCard}
             />
             <ConsoleLog className={bn('Log')}>
-              {buildLogs || "Loading log..."}
+              {buildLogs || 'Loading log...'}
             </ConsoleLog>
           </section>
         </div>
