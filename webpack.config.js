@@ -17,6 +17,10 @@ const POSTCSS_CONFIG_PATH = path.resolve(ROOT, "./postcss.config.js");
 
 const OUTPUT_PATH = path.resolve(__dirname, './static');
 const IS_PRODUCTION = (process.env.NODE_ENV === 'production');
+const alias = {
+  "components": path.resolve(ROOT, "./src/client/components"),
+  "common": path.resolve(ROOT, "./src/client/common"),
+};
 
 /**
  * Common Webpack Config
@@ -77,10 +81,7 @@ const common = {
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
     modules: ['node_modules'],
-    alias: {
-      "components": path.resolve(ROOT, "./src/client/components"),
-      "common": path.resolve(ROOT, "./src/client/common"),
-    }
+    alias: alias
   },
 };
 
@@ -103,7 +104,7 @@ const development = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: './static/index.html',
+      template: './src/client/static/index.html',
       filename: 'index.html',
       minify: false,
     }),
@@ -173,6 +174,38 @@ const production = {
   ],
 };
 
+const ssr = {
+  mode: 'production',
+  entry: './src/client/index.ssr.js',
+  output: {
+    path: OUTPUT_PATH,
+    publicPath: '/',
+    filename: `[name].bundle.ssr.js`,
+    pathinfo: true,
+    libraryTarget: 'umd',
+  },
+  module: {
+    rules: [
+      { test: /\.(js|jsx|ts|tsx)$/, loader: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.(css|scss|sass)$/, loader: 'ignore-loader' },
+      { test: /\.(woff|woff2)$/, loader: 'ignore-loader' },
+      { test: /\.(png|jpg|gif)$/, loader: 'ignore-loader' },
+    ],
+  },
+  target: 'node',
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': { NODE_ENV: JSON.stringify(process.env.NODE_ENV) },
+      'process.env': { SSR: JSON.stringify(true) },
+    }),
+  ],
+  resolve: {
+    extensions: [".js", ".jsx", ".ts", ".tsx"],
+    modules: ['node_modules'],
+    alias: alias
+  },
+};
+
 module.exports = (IS_PRODUCTION)
-  ? merge(common, production)
+  ? [merge(common, production), ssr]
   : merge(common, development);

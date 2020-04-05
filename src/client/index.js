@@ -1,18 +1,16 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { ToastProvider } from 'react-toast-notifications';
 
 import createReduxStore from './services/redux/store';
 import App from './components/App';
 
-const store = createReduxStore();
+const store = createReduxStore(window.__INITIAL_STATE__);
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <Provider store={store}>
-    <ToastProvider>
-      <App />
-    </ToastProvider>
+    <App />
   </Provider>,
   document.getElementById('app'),
 );

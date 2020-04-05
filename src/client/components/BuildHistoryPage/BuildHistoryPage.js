@@ -24,7 +24,9 @@ function BuildHistoryPage(props) {
   const closeDialog = () => setDialogOpen(false);
 
   useEffect(() => {
-    fetchBuilds();
+    if (!props.buildsCards) {
+      fetchBuilds();
+    }
   }, []);
 
   return (

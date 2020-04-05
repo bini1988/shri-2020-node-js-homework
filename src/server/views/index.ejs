@@ -16,7 +16,12 @@
     <!-- endinject -->
   </div>
   <!-- SVG symbols END -->
-  <div class="Page-App" id="app"></div>
+  <div class="Page-App" id="app">
+    <%- page %>
+  </div>
+  <% if (serializedInitialState) { %>
+    <script>window.__INITIAL_STATE__ = <%- serializedInitialState %>;</script>
+  <% } %>
   <script src="/manifest.bundle.min.js"></script>
   <script src="/vendors.chunk.min.js"></script>
   <script src="/main.chunk.min.js"></script>
