@@ -6,7 +6,9 @@
   <title>School CI server</title>
   <meta name="description" content="School CI server">
   <link rel='stylesheet' href='//cdn.jsdelivr.net/npm/hack-font@3.3.0/build/web/hack.css'>
-  <link href="/main.style.min.css" rel="stylesheet">
+  <% if (env === 'production') { %>
+    <link href="/main.style.min.css" rel="stylesheet">
+  <% } %>
 </head>
 <body class="Page Theme Theme_color_default Theme_size_default Theme_space_default">
   <!-- SVG symbols -->
@@ -16,14 +18,17 @@
     <!-- endinject -->
   </div>
   <!-- SVG symbols END -->
-  <div class="Page-App" id="app">
-    <%- page %>
-  </div>
-  <% if (serializedInitialState) { %>
-    <script>window.__INITIAL_STATE__ = <%- serializedInitialState %>;</script>
+  <div class="Page-App" id="app"><%- appMarkup %></div>
+  <% if (serializedState) { %>
+    <script>window.__INITIAL_STATE__ = <%- serializedState %>;</script>
   <% } %>
-  <script src="/manifest.bundle.min.js"></script>
-  <script src="/vendors.chunk.min.js"></script>
-  <script src="/main.chunk.min.js"></script>
+  <% if (env === 'development') { %>
+    <script src="http://localhost:3000/main.bundle.js"></script>
+  <% } %>
+  <% if (env === 'production') { %>
+    <script src="/manifest.bundle.min.js"></script>
+    <script src="/vendors.chunk.min.js"></script>
+    <script src="/main.chunk.min.js"></script>
+  <% } %>
 </body>
 </html>

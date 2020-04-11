@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:server": "nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "start:server": "cross-env NODE_ENV=development nodemon index.js",
     "start:client": "cross-env NODE_ENV=development webpack-dev-server --color",
     "build:client": "cross-env NODE_ENV=production webpack --color",
-    "run": "cross-env NODE_ENV=production node index.js",
     "test:lint": "eslint ./src/**/*.js"
   },
   "repository": {

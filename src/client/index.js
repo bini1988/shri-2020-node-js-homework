@@ -7,10 +7,11 @@ import createReduxStore from './services/redux/store';
 import App from './components/App';
 
 const store = createReduxStore(window.__INITIAL_STATE__);
+const container = document.getElementById('app');
+const element = (<Provider store={store}><App /></Provider>);
 
-ReactDOM.hydrate(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('app'),
-);
+if (process.env.NODE_ENV === 'production') {
+  ReactDOM.hydrate(element, container);
+} else {
+  ReactDOM.render(element, container);
+}

@@ -98,16 +98,17 @@ const development = {
   devServer: {
     port: 3000,
     hot: true,
+    headers: { "Access-Control-Allow-Origin": "*" },
     overlay: true,
     historyApiFallback: true,
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin({
-      template: './src/client/static/index.html',
-      filename: 'index.html',
-      minify: false,
-    }),
+    // new HtmlWebpackPlugin({
+    //   template: './src/client/static/index.html',
+    //   filename: 'index.html',
+    //   minify: false,
+    // }),
   ],
 };
 
