@@ -8,6 +8,8 @@
     "start:server": "cross-env NODE_ENV=development nodemon index.js",
     "start:client": "cross-env NODE_ENV=development webpack-dev-server --color",
     "build:client": "cross-env NODE_ENV=production webpack --color",
+    "test:server": "selenium-standalone start",
+    "test:e2e": "hermione",
     "test:lint": "eslint ./src/**/*.js"
   },
   "repository": {
@@ -66,6 +68,7 @@
     "@types/node": "^12.12.31",
     "@types/react": "^16.9.26",
     "babel-loader": "^8.1.0",
+    "chai": "^4.2.0",
     "cross-env": "^7.0.2",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
@@ -79,6 +82,7 @@
     "eslint-plugin-react-hooks": "^2.5.0",
     "eslint-plugin-standard": "^4.0.1",
     "file-loader": "^6.0.0",
+    "hermione": "^3.1.0",
     "html-webpack-plugin": "^4.0.1",
     "ignore-loader": "^0.1.2",
     "mini-css-extract-plugin": "^0.9.0",

@@ -30,3 +30,9 @@
 
 - Запустить webpack-dev-server коммандой `npm run start:client`
 - Перейти по адресу `http://127.0.0.1:3030/`
+
+## Тестирование
+
+- Установить [selenium-standalone](https://github.com/vvo/selenium-standalone#install--run)
+- Запустить selenium сервер `npm run test:server`
+- Запустить e2e тесты `npm run test:e2e`
