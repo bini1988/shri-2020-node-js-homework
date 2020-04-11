@@ -2,8 +2,9 @@
 /* eslint-disable class-methods-use-this */
 const EventEmitter = require('events');
 const api = require('../ci-api');
-const CIRepo = require('../ci-repo');
 const CIBuilder = require('../ci-builder');
+const CILogs = require('../ci-logs');
+const CIRepo = require('../ci-repo');
 
 /**
  * @typedef {Object} Settings
@@ -17,8 +18,16 @@ const CIBuilder = require('../ci-builder');
  * Управление CI системой
  */
 class CIManager extends EventEmitter {
-  constructor(settings = {}) {
+  /**
+   * @param {Object} params
+   * @param {Object} params.settings Параметры CI системы
+   * @param {Object} params.tmp Путь к временной дирректории
+   */
+  constructor(params = {}) {
     super();
+
+    const { settings = {}, tmp } = params;
+    const { repoName } = settings;
 
     /**
      * @type {Settings}
@@ -27,11 +36,22 @@ class CIManager extends EventEmitter {
     /**
      * @type {CIRepo}
      */
-    this._repo = new CIRepo(settings.repoName);
+    this._repo = new CIRepo({ repoName, tmp });
+    /**
+     * @type {CILogs}
+     */
+    this._logs = new CILogs({ tmp });
     /**
      * @type {CIBuilder}
      */
     this._builder = new CIBuilder();
+  }
+
+  /**
+   * Сервис управления логами билдов
+   */
+  get logs() {
+    return this._logs;
   }
 
   /**

@@ -1,15 +1,23 @@
+/* eslint-disable prefer-destructuring */
 const asyncHandler = require('express-async-handler');
 const NotFoundError = require('../../services/errors/not-found-error');
-const CILogs = require('../../services/ci-logs');
+
+/**
+ * @typedef {import('./../../services/ci-manager')} CIManager
+ */
 
 /**
  * Получение логов билда о конкретной сборке
  */
 module.exports = asyncHandler(async (req, res) => {
   const { buildId } = req.params;
+  /**
+   * @type {CIManager}
+   */
+  const ci = req.app.locals.ci;
 
   try {
-    const data = await CILogs.fetchLogsByBuildId(buildId);
+    const data = await ci.logs.fetchLogsByBuildId(buildId);
 
     res.status(200).send(data);
   } catch (error) {

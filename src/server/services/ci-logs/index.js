@@ -16,11 +16,19 @@ const MAX_CACHE_LIFE_TIME = 30; // min
 const CLEANUP_TIMEOUT = 30 * 60 * 1000; // ms
 
 /**
- * Управление кэщированим логов билдов
+ * Управление кэшированим логов билдов
  */
 class CILogs {
-  constructor() {
-    this.basePath = path.join(TMP_DIR, 'logs');
+  /**
+   * @param {Object} params
+   * @param {string} params.tmp Путь к временной дирректории
+   */
+  constructor(params = {}) {
+    const {
+      tmp = TMP_DIR,
+    } = params;
+
+    this.basePath = path.join(tmp, 'logs');
 
     if (!fs.existsSync(this.basePath)) {
       fs.mkdirSync(this.basePath);
@@ -111,4 +119,4 @@ class CILogs {
   }
 }
 
-module.exports = new CILogs();
+module.exports = CILogs;

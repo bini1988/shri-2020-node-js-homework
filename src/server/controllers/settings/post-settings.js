@@ -1,7 +1,12 @@
+/* eslint-disable prefer-destructuring */
 const _ = require('lodash');
 const asyncHandler = require('express-async-handler');
 const ValidationError = require('../../services/errors/validation-error');
 const api = require('../../services/ci-api');
+
+/**
+ * @typedef {import('./../../services/ci-manager')} CIManager
+ */
 
 /**
  * Возвращает переданные настройки
@@ -33,10 +38,14 @@ function parseSettings(body) {
  * Сохранение настроек
  */
 module.exports = asyncHandler(async (req, res) => {
+  /**
+   * @type {CIManager}
+   */
+  const ci = req.app.locals.ci;
   const settings = parseSettings(req.body);
 
   await api.Settings.save(settings);
 
-  req.app.locals.ci.setup(settings);
+  ci.setup(settings);
   res.status(200).end();
 });

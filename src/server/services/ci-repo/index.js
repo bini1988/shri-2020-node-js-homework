@@ -11,12 +11,24 @@ const SPLIT_CHAR = '<##>';
  * Работа с локальной копией репозитория
  */
 class CIRepo {
-  constructor(name = '', base = 'https://github.com/') {
-    this.base = base;
-    this.name = name;
+  /**
+   * @param {Object} params
+   * @param {string} params.repoName Имя репозитория
+   * @param {string} [params.baseName] Хост репозитория
+   * @param {string} [params.tmp] Путь к временной дирректории
+   */
+  constructor(params = {}) {
+    const {
+      repoName = '',
+      baseName = 'https://github.com/',
+      tmp = TMP_DIR,
+    } = params;
+
+    this.base = baseName;
+    this.name = repoName;
     this.branch = 'master';
-    this.path = path.join(TMP_DIR, 'repos', name);
-    this.url = `${this.base}${name}.git`;
+    this.path = path.join(tmp, 'repos', this.name);
+    this.url = `${this.base}${this.name}.git`;
   }
 
   /**
