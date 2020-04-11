@@ -38,10 +38,8 @@ async function fetchInitialState(buildId) {
 }
 
 const handleIndex = asyncHandler(async (req, res) => {
-  const location = req.url;
-  const match = /^\/build\/(.*)$/.exec(req.url);
-  const buildId = match ? match[1] : undefined;
-
+  const { url: location, params = {} } = req;
+  const { buildId } = params;
   const initialState = await fetchInitialState(buildId);
   const serializedState = serialize(initialState);
 
