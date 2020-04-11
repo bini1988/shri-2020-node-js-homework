@@ -29,7 +29,11 @@
   @include visually-hidden();
 }
 
+.BuildDetailsPage-Link {
+  color: inherit;
+  text-decoration: none;
+}
+
 .BuildDetailsPage-Card {
   margin-bottom: 12px;
 }
-

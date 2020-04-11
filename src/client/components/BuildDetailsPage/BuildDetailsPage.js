@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
 
@@ -30,7 +31,7 @@ function BuildDetailsPage(props) {
     <div className={classnames(className, bn())}>
       <PageHeader className={bn('Header')}>
         <PageHeader.Title accent>
-          {repoName}
+          <Link to="/" className={bn('Link')}>{repoName}</Link>
         </PageHeader.Title>
         <PageHeader.Aside className={bn('Aside')}>
           <Button
