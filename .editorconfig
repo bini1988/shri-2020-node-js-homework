@@ -8,7 +8,7 @@ indent_style = space
 # Использовать 2 пробела для отступа
 indent_size = 2
 
-end_of_line = lf
+end_of_line = crlf
 
 # Использовать UTF-8 для всех файлов
 charset = utf-8
