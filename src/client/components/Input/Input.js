@@ -28,6 +28,7 @@ function Input(props) {
       <input
         ref={innerRef}
         className={bn('Control')}
+        data-test="input"
         type={type}
         id={id}
         name={name}
@@ -39,6 +40,7 @@ function Input(props) {
       />
       <button
         className={bn('Clear', { hidden: !value })}
+        data-test="clear"
         type="button"
         onClick={() => onChange('')}
       >

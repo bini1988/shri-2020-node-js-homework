@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
+import { useSelector } from 'react-redux';
 
 import './SettingsPage.scss';
-import useNotification from '../../hooks/useNotification';
+import { getSettingsValues } from '../../services/redux/reducer/settings';
+import useSettingsSubmit from '../../hooks/useSettingsSubmit';
 import PageHeader from '../PageHeader';
 import PageFooter from '../PageFooter';
 import SettingsForm from '../SettingsForm';
@@ -15,19 +17,17 @@ const bn = cn('SettingsPage');
  * Страница 'Настройки'
  */
 function SettingsPage(props) {
-  const {
-    className, history, settings, saveSettings,
-  } = props;
-
-  const { onError, onSuccess } = useNotification();
-  const handleSubmit = (values) => saveSettings(values)
-    .then(() => {
-      onSuccess('Settings successfully saved');
-      history.push('/history');
-    }).catch((error) => onError(error.message));
+  const { className, history } = props;
+  const settings = useSelector(getSettingsValues);
+  const handleSubmit = useSettingsSubmit({
+    onSuccess: useCallback(() => history.push('/history'), [history]),
+  });
 
   return (
-    <div className={classnames(className, bn())}>
+    <div
+      className={classnames(className, bn())}
+      data-test="settings-page"
+    >
       <PageHeader className={bn('Header')}>
         <PageHeader.Title>
           School CI server
@@ -56,8 +56,6 @@ SettingsPage.propTypes = {
     push: PropTypes.func,
     goBack: PropTypes.func,
   }).isRequired,
-  settings: PropTypes.object,
-  saveSettings: PropTypes.func,
 };
 
 export default SettingsPage;

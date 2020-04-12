@@ -11,14 +11,18 @@ const bn = cn('NumericInput');
 
 function NumericInput(props) {
   const {
-    className, id, name, label, value, min, max, palceholder, units, onChange,
+    className, id, name, label, value, min, max, palceholder, units, onChange, ...restProps
   } = props;
 
   return (
-    <div className={classnames(className, bn())}>
+    <div className={classnames(className, bn())} {...restProps}>
       <div className={bn('Wrapper')}>
         {!!label && (
-          <label className={bn('Label')} htmlFor={id}>
+          <label
+            className={bn('Label')}
+            data-test="label"
+            htmlFor={id}
+          >
             {label}
           </label>
         )}
@@ -39,7 +43,7 @@ function NumericInput(props) {
             <Input innerRef={ref} {...forwardProps} />
           )}
         />
-        <span className={bn('Units')}>{units}</span>
+        <span className={bn('Units')} data-test="units">{units}</span>
       </div>
     </div>
   );
