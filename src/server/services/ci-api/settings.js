@@ -24,7 +24,7 @@ module.exports = {
   /**
    * Удалить сохраненные настройки
    */
-  remove() {
+  delete() {
     return axios.delete('/conf');
   },
 };
