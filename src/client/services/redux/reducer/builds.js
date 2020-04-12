@@ -50,7 +50,9 @@ export const getBuildLogsById = (state, id) => getBuildsLogsMap(state)[id];
  */
 export const getBuildsCards = createSelector(
   [getBuildsIds, getBuildsMap],
-  (buildsIds, buildsMap) => buildsIds.map((id) => buildsMap[id]),
+  (buildsIds, buildsMap) => buildsIds
+    .map((id) => buildsMap[id])
+    .sort((buildA, buildB) => buildB.buildNumber - buildA.buildNumber),
 );
 
 /**
@@ -140,7 +142,8 @@ export function fetchBuildLogsById(id) {
  * @return {Promise}
  */
 export function queueBuild(commitHash) {
-  return () => Api.Builds.queueBuild(commitHash);
+  return (dispatch) => Api.Builds.queueBuild(commitHash)
+    .then(({ data }) => dispatch(fetchBuildById(data.id)));
 }
 
 export const initialState = {
@@ -164,6 +167,9 @@ export default function (state = initialState, action) {
   case STORE_BUILD:
     return {
       ...state,
+      buildsIds: state.buildsIds.includes(action.payload.id)
+        ? state.buildsIds
+        : [action.payload.id, ...state.buildsIds],
       buildsMap: {
         ...state.buildsMap,
         [action.payload.id]: action.payload,

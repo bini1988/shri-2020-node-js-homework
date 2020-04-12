@@ -36,7 +36,7 @@ function BuildDetailsPage(props) {
   useEffect(() => {
     dispatch(fetchBuildById(buildId));
     dispatch(fetchBuildLogsById(buildId));
-  }, []);
+  }, [buildId]);
 
   return (
     <div className={classnames(className, bn())}>

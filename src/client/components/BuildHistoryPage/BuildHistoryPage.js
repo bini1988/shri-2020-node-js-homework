@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -88,8 +89,8 @@ function BuildHistoryPage(props) {
           onSubmit={({ commit }) => {
             closeDialog();
             if (commit) {
-              dispatch(queueBuild(commit)).then(({ buildId }) => {
-                history.push(`/build/${buildId}`);
+              dispatch(queueBuild(commit)).then(({ id }) => {
+                id && history.push(`/build/${id}`);
               });
             }
           }}
