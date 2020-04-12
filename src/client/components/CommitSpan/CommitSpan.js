@@ -11,13 +11,16 @@ function CommitSpan(props) {
   const { className, branch, hash } = props;
 
   return (
-    <span className={classnames(className, bn())}>
+    <span
+      className={classnames(className, bn())}
+      data-test="commit"
+    >
       <span className={bn('Label')}>Commit: </span>
       <svg className={bn('Icon')} width="16" height="16">
         <use xlinkHref="#code-commit" />
       </svg>
-      <span className={bn('Branch')}>{branch}</span>
-      <span className={bn('Hash')}>{hash}</span>
+      <span className={bn('Branch')} data-test="branch">{branch}</span>
+      <span className={bn('Hash')} data-test="hash">{hash}</span>
     </span>
   );
 }

@@ -1,4 +1,5 @@
 import Api from '../../api';
+import { fetchBuilds } from './builds';
 
 export const SETTINGS_STORAGE_KEY = 'settings';
 export const STORE_SETTINGS = '@builds/STORE_SETTINGS';
@@ -16,13 +17,12 @@ export const getSettingsState = (state) => state[SETTINGS_STORAGE_KEY];
 export const getSettingsValues = (state) => getSettingsState(state).values;
 
 /**
- * Получить заданную настройку
+ * Получить наименование репозитория
  * @param {Object} state Глобальный объект redux store
- * @param {string} name Имя настройки
  */
-export const getSettingOf = (state, name) => {
+export const getSettingOfRepoName = (state) => {
   const settings = getSettingsValues(state);
-  return settings && settings[name];
+  return settings && settings.repoName;
 };
 
 /**
@@ -51,9 +51,17 @@ export function fetchSettings() {
  */
 export function saveSettings(values) {
   return (dispatch) => Api.Settings.saveSettings(values)
-    .then(() => {
-      dispatch(storeSettings(values));
-    });
+    .then(() => { dispatch(storeSettings(values)); });
+}
+
+/**
+ * Применить настройки
+ * @param {Object} values Объект настроек
+ * @return {Promise}
+ */
+export function applySettings(values) {
+  return (dispatch) => dispatch(saveSettings(values))
+    .then(() => { dispatch(fetchBuilds()); });
 }
 
 export const initialState = {

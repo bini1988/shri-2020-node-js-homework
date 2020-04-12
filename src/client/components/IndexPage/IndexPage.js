@@ -1,28 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import MainPage from '../MainPage';
 import BuildHistoryPage from '../BuildHistoryPage';
+import { getSettingsValues } from '../../services/redux/reducer/settings';
 
 /**
  * Главная страница
  */
 function IndexPage(props) {
-  const { settings, fetchSettings, ...restProps } = props;
+  const settings = useSelector(getSettingsValues);
 
   return (settings) ? (
-    <BuildHistoryPage {...restProps} />
+    <BuildHistoryPage {...props} />
   ) : (
-    <MainPage {...restProps} />
+    <MainPage {...props} />
   );
 }
-
-IndexPage.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }).isRequired,
-  settings: PropTypes.object,
-  fetchSettings: PropTypes.func,
-};
 
 export default IndexPage;

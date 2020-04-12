@@ -46,6 +46,7 @@ module.exports = asyncHandler(async (req, res) => {
 
   await api.Settings.save(settings);
 
-  ci.setup(settings);
-  res.status(200).end();
+  const data = await ci.setup(settings);
+
+  res.status(200).json({ data });
 });
