@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
 
@@ -20,7 +21,7 @@ function MainPage({ className, history }) {
     <div className={classnames(className, bn())}>
       <PageHeader className={bn('Header')}>
         <PageHeader.Title>
-          School CI server
+          <Link to="/" className={bn('Link')}>School CI server</Link>
         </PageHeader.Title>
         <PageHeader.Aside>
           <Button

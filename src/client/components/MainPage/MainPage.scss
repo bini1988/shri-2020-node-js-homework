@@ -5,6 +5,11 @@
   min-height: 100vh;
 }
 
+.MainPage-Link {
+  color: inherit;
+  text-decoration: none;
+}
+
 .MainPage-Header,
 .MainPage-Footer {
   flex: 0 1 auto;
@@ -36,4 +41,3 @@
 .MainPage-Intro {
   margin-bottom: var(--space-m);
 }
-
