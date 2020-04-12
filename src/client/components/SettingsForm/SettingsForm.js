@@ -25,15 +25,23 @@ function SettingsForm(props) {
   ] = useSettingsForm({ initialValues, onSubmit });
 
   return (
-    <section className={classnames(className, bn())}>
-      <h3 className={bn('Title')}>Settings</h3>
+    <section
+      className={classnames(className, bn())}
+      data-test="settings-form"
+    >
+      <h3 className={bn('Title')} data-test="title">Settings</h3>
       <p className={bn('Text')}>
         Configure repository connection and synchronization settings.
       </p>
-      <form className={bn('Form')} onSubmit={handelSubmit}>
+      <form
+        className={bn('Form')}
+        data-test="form"
+        onSubmit={handelSubmit}
+      >
         <fieldset className={bn('Fieldset')}>
           <TextInput
             className={bn('Field')}
+            data-test="repoName"
             name="repoName"
             value={values.repoName}
             label="GitHub repository"
@@ -43,6 +51,7 @@ function SettingsForm(props) {
           />
           <TextInput
             className={bn('Field')}
+            data-test="buildCommand"
             id="buildCommand"
             name="buildCommand"
             value={values.buildCommand}
@@ -53,6 +62,7 @@ function SettingsForm(props) {
           />
           <TextInput
             className={bn('Field')}
+            data-test="mainBranch"
             id="mainBranch"
             name="mainBranch"
             value={values.mainBranch}
@@ -62,6 +72,7 @@ function SettingsForm(props) {
           />
           <NumericInput
             className={bn('Field')}
+            data-test="period"
             id="period"
             name="period"
             value={values.period}
@@ -76,6 +87,7 @@ function SettingsForm(props) {
         <div className={bn('Footer')}>
           <Button
             className={bn('Button')}
+            data-test="submit"
             theme="action"
             label="Save"
             type="submit"
@@ -83,6 +95,7 @@ function SettingsForm(props) {
           />
           <Button
             className={bn('Button')}
+            data-test="cancel"
             label="Cancel"
             disabled={submitting}
             onClick={onCancel}

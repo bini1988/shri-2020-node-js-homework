@@ -10,13 +10,17 @@ const bn = cn('TextInput');
 
 function TextInput(props) {
   const {
-    className, id, name, label, value, palceholder, required, onChange,
+    className, id, name, label, value, palceholder, required, onChange, ...restProps
   } = props;
 
   return (
-    <div className={classnames(className, bn({ required }))}>
+    <div className={classnames(className, bn({ required }))} {...restProps}>
       {!!label && (
-        <label className={bn('Label')} htmlFor={name}>
+        <label
+          className={bn('Label')}
+          data-test="label"
+          htmlFor={name}
+        >
           {label}
         </label>
       )}

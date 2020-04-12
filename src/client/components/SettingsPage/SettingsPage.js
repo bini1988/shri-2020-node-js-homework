@@ -24,7 +24,10 @@ function SettingsPage(props) {
   });
 
   return (
-    <div className={classnames(className, bn())}>
+    <div
+      className={classnames(className, bn())}
+      data-test="settings-page"
+    >
       <PageHeader className={bn('Header')}>
         <PageHeader.Title>
           School CI server
