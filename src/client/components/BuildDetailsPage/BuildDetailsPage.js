@@ -1,10 +1,18 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
 
 import './BuildDetailsPage.scss';
+import {
+  getBuildCardById,
+  getBuildLogsById,
+  fetchBuildById,
+  fetchBuildLogsById,
+} from '../../services/redux/reducer/builds';
+import { getSettingOfRepoName } from '../../services/redux/reducer/settings';
 import PageHeader from '../PageHeader';
 import PageFooter from '../PageFooter';
 import Button from '../Button';
@@ -17,14 +25,17 @@ const bn = cn('BuildDetailsPage');
  * Информация о сборке
  */
 function BuildDetailsPage(props) {
-  const {
-    className, history, match, buildCard, buildLogs, repoName, fetchBuildById, fetchBuildLogsById,
-  } = props;
+  const { className, history, match } = props;
   const buildId = match && match.params.id;
 
+  const dispatch = useDispatch();
+  const repoName = useSelector(getSettingOfRepoName);
+  const buildCard = useSelector((state) => getBuildCardById(state, buildId));
+  const buildLogs = useSelector((state) => getBuildLogsById(state, buildId));
+
   useEffect(() => {
-    fetchBuildById(buildId);
-    fetchBuildLogsById(buildId);
+    dispatch(fetchBuildById(buildId));
+    dispatch(fetchBuildLogsById(buildId));
   }, []);
 
   return (
@@ -81,11 +92,6 @@ BuildDetailsPage.propTypes = {
       id: PropTypes.string,
     }),
   }),
-  buildCard: PropTypes.object,
-  buildLogs: PropTypes.string,
-  repoName: PropTypes.string,
-  fetchBuildById: PropTypes.func,
-  fetchBuildLogsById: PropTypes.func,
 };
 
 export default BuildDetailsPage;

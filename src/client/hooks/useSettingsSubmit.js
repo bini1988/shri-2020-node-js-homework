@@ -2,7 +2,7 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import useNotification from './useNotification';
-import { saveSettings } from '../services/redux/reducer/settings';
+import { applySettings } from '../services/redux/reducer/settings';
 
 const Nop = () => {};
 
@@ -19,7 +19,7 @@ function useSettingsSubmit(params = {}) {
   const notify = useNotification();
 
   return useCallback((values) =>
-    dispatch(saveSettings(values))
+    dispatch(applySettings(values))
       .then(() => {
         onSuccess(values);
         notify.onSuccess('Settings successfully saved');

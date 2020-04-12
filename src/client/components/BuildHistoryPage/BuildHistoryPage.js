@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
 
 import './BuildHistoryPage.scss';
+import { getSettingOfRepoName } from '../../services/redux/reducer/settings';
+import { getBuildsCards, fetchBuilds, queueBuild } from '../../services/redux/reducer/builds';
 import PageHeader from '../PageHeader';
 import PageFooter from '../PageFooter';
 import Button from '../Button';
@@ -17,15 +20,16 @@ const bn = cn('BuildHistoryPage');
  * Страница 'История сборок'
  */
 function BuildHistoryPage(props) {
-  const {
-    className, history, buildsCards = [], fetchBuilds, queueBuild,
-  } = props;
+  const { className, history } = props;
+  const repoName = useSelector(getSettingOfRepoName);
+  const buildsCards = useSelector(getBuildsCards);
+  const dispatch = useDispatch();
   const [isDialogOpen, setDialogOpen] = useState(false);
   const closeDialog = () => setDialogOpen(false);
 
   useEffect(() => {
-    if (!props.buildsCards) {
-      fetchBuilds();
+    if (!buildsCards) {
+      dispatch(fetchBuilds());
     }
   }, []);
 
@@ -33,7 +37,7 @@ function BuildHistoryPage(props) {
     <div className={classnames(className, bn())}>
       <PageHeader className={bn('Header')}>
         <PageHeader.Title accent>
-          School CI server
+          <Link to="/" className={bn('Link')}>{repoName}</Link>
         </PageHeader.Title>
         <PageHeader.Aside
           className={bn('Aside')}
@@ -84,7 +88,7 @@ function BuildHistoryPage(props) {
           onSubmit={({ commit }) => {
             closeDialog();
             if (commit) {
-              queueBuild(commit).then(({ buildId }) => {
+              dispatch(queueBuild(commit)).then(({ buildId }) => {
                 history.push(`/build/${buildId}`);
               });
             }
@@ -101,11 +105,6 @@ BuildHistoryPage.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
-  buildsCards: PropTypes.arrayOf(
-    PropTypes.object,
-  ),
-  fetchBuilds: PropTypes.func,
-  queueBuild: PropTypes.func,
 };
 
 export default BuildHistoryPage;
