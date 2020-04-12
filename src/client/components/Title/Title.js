@@ -8,10 +8,12 @@ import './Title.scss';
 const bn = cn('Title');
 
 function Title(props) {
-  const { className, accent, children } = props;
+  const {
+    className, accent, children, ...restProps
+  } = props;
 
   return (
-    <h1 className={classnames(className, bn({ accent }))}>
+    <h1 className={classnames(className, bn({ accent }))} {...restProps}>
       {children}
     </h1>
   );
