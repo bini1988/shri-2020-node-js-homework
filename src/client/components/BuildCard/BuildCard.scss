@@ -154,6 +154,10 @@
   border-top: 1px solid var(--color-bg-accent);
 }
 
+.BuildCard_view_details .BuildCard-Time + .BuildCard-Time {
+  margin-left: 10px;
+}
+
 .BuildCard_status_Success {
   .BuildCard-Status,
   .BuildCard-No {
