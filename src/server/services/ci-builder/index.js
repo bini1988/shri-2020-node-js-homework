@@ -81,7 +81,7 @@ class CIBuilder {
       logger.info(`CIBuilder: Start build execution for ${build.buildId}`);
       await api.Build.startBuild(build);
     } catch (error) {
-      logger.error(`CIBuilder: Start build request failed for ${build.id}`, error);
+      logger.error(`CIBuilder: Start build request failed for ${build.buildId}`, error);
     }
   }
 
