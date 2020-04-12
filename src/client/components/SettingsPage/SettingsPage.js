@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
 import { useSelector } from 'react-redux';
@@ -30,7 +31,7 @@ function SettingsPage(props) {
     >
       <PageHeader className={bn('Header')}>
         <PageHeader.Title>
-          School CI server
+          <Link to="/" className={bn('Link')}>School CI server</Link>
         </PageHeader.Title>
       </PageHeader>
       <main className={bn('Main')}>

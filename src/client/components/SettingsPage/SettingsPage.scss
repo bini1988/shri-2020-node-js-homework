@@ -5,6 +5,11 @@
   min-height: 100vh;
 }
 
+.SettingsPage-Link {
+  color: inherit;
+  text-decoration: none;
+}
+
 .SettingsPage-Header,
 .SettingsPage-Footer {
   flex: 0 1 auto;
