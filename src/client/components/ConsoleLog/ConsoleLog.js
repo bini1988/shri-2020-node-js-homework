@@ -15,7 +15,10 @@ function ConsoleLog(props) {
   const html = children ? convert.toHtml(children) : null;
 
   return (
-    <div className={classnames(className, bn())}>
+    <div
+      className={classnames(className, bn())}
+      data-test="console-log"
+    >
       <pre className={bn('Wrappper')} dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   );

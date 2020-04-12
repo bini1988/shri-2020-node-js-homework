@@ -44,7 +44,10 @@ function BuildDetailsPage(props) {
   }, [buildId]);
 
   return (
-    <div className={classnames(className, bn())}>
+    <div
+      className={classnames(className, bn())}
+      data-test="build-details-page"
+    >
       <PageHeader className={bn('Header')}>
         <PageHeader.Title accent>
           <Link to="/" className={bn('Link')}>{repoName}</Link>
@@ -54,12 +57,14 @@ function BuildDetailsPage(props) {
             adaptive
             label="Rebuild"
             iconName="rebuild"
+            data-test="btn-rebuild"
             size="s"
             onClick={() => handleQueueBuild(commitHash)}
           />
           <Button
             label="Settings"
             iconName="settings"
+            data-test="btn-settings"
             size="s"
             view="tile"
             onClick={() => history.push('/settings')}
@@ -68,7 +73,7 @@ function BuildDetailsPage(props) {
       </PageHeader>
       <main className={bn('Main')}>
         <div className={classnames(bn('Container'), 'Container')}>
-          <section className={bn('Details')}>
+          <section className={bn('Details')} data-test="details">
             <h3 className={bn('Title')}>
               BuildDetailsPage
             </h3>

@@ -17,10 +17,14 @@ function NewBuildForm(props) {
   const { className, onSubmit, onCancel } = props;
 
   return (
-    <section className={classnames(className, bn())}>
+    <section
+      className={classnames(className, bn())}
+      data-test="new-build-form"
+    >
       <h3 className={bn('Title')}>New build</h3>
       <form
         className={bn('Form')}
+        data-test="form"
         onSubmit={(event) => {
           event.preventDefault();
           onSubmit({ commit });
@@ -33,12 +37,14 @@ function NewBuildForm(props) {
           id="commit"
           name="commit"
           value={commit}
+          data-test="commit"
           palceholder="Commit hash"
           onChange={onCommitChange}
         />
         <div className={bn('Footer')}>
           <Button
             className={bn('Button')}
+            data-test="submit"
             type="submit"
             theme="action"
             label="Run build"
@@ -46,6 +52,7 @@ function NewBuildForm(props) {
           />
           <Button
             className={bn('Button')}
+            data-test="cancel"
             theme="secondary"
             label="Cancel"
             onClick={onCancel}

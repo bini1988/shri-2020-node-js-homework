@@ -18,6 +18,7 @@ function BuildCard(props) {
     className, interactive, view, card = {},
   } = props;
   const {
+    id,
     status,
     buildNumber = '--',
     commitMessage,
@@ -31,7 +32,12 @@ function BuildCard(props) {
   const endDate = new Date(duration + (+new Date(0)));
 
   return (
-    <article className={classnames(className, bn({ status, interactive, view }))}>
+    <article
+      className={classnames(className, bn({ status, interactive, view }))}
+      data-test="build-card"
+      data-status={status}
+      data-id={id}
+    >
       <div className={bn('Wrapper')}>
         <div className={bn('Status')}>
           <svg className={bn('Icon')} width="24" height="24">

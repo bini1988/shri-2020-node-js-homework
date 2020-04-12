@@ -39,7 +39,10 @@ function BuildHistoryPage(props) {
   }, []);
 
   return (
-    <div className={classnames(className, bn())}>
+    <div
+      className={classnames(className, bn())}
+      data-test="build-history-page"
+    >
       <PageHeader className={bn('Header')}>
         <PageHeader.Title accent>
           <Link to="/" className={bn('Link')}>{repoName}</Link>
@@ -51,12 +54,14 @@ function BuildHistoryPage(props) {
             adaptive
             label="Run build"
             iconName="play"
+            data-test="btn-build"
             size="s"
             onClick={() => setDialogOpen(true)}
           />
           <Button
             label="Settings"
             iconName="settings"
+            data-test="btn-settings"
             size="s"
             view="tile"
             onClick={() => history.push('/settings')}
@@ -69,10 +74,14 @@ function BuildHistoryPage(props) {
             <h3 className={bn('Title')}>
               BuildHistoryPage
             </h3>
-            <ul className={bn('Items')}>
+            <ul className={bn('Items')} data-test="card-items">
               {buildsCards.map((build = {}) => (
                 <li className={bn('Item')} key={build.id}>
-                  <Link className={bn('Link')} to={`/build/${build.id}`}>
+                  <Link
+                    to={`/build/${build.id}`}
+                    className={bn('Link')}
+                    data-test="card-link"
+                  >
                     <BuildCard interactive card={build} />
                   </Link>
                 </li>
