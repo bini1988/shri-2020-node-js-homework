@@ -24,10 +24,18 @@ function PageHeader(props) {
 }
 
 PageHeader.Title = ({ className, ...props }) => (
-  <Title {...props} className={classnames(className, bn('Title'))} />
+  <Title
+    {...props}
+    className={classnames(className, bn('Title'))}
+    data-test="title"
+  />
 );
 PageHeader.Aside = ({ className, ...props }) => (
-  <div {...props} className={classnames(className, bn('Aside'))} />
+  <div
+    {...props}
+    className={classnames(className, bn('Aside'))}
+    data-test="aside"
+  />
 );
 
 PageHeader.propTypes = {

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
 
@@ -18,16 +17,20 @@ function MainPage({ className, history }) {
   const handleSettings = () => history.push('/settings');
 
   return (
-    <div className={classnames(className, bn())}>
+    <div
+      className={classnames(className, bn())}
+      data-test="main-page"
+    >
       <PageHeader className={bn('Header')}>
         <PageHeader.Title>
-          <Link to="/" className={bn('Link')}>School CI server</Link>
+          School CI server
         </PageHeader.Title>
         <PageHeader.Aside>
           <Button
             adaptive
             label="Settings"
             iconName="settings"
+            data-test="btn-settings"
             size="s"
             onClick={handleSettings}
           />
@@ -35,7 +38,7 @@ function MainPage({ className, history }) {
       </PageHeader>
       <main className={bn('Main')}>
         <div className={classnames(bn('Container'), 'Container')}>
-          <section className={bn('Intro')}>
+          <section className={bn('Intro')} data-test="intro">
             <div className={bn('Wrapper')}>
               <svg className={bn('Logo')} width="124" height="124">
                 <use xlinkHref="#logo" />
@@ -46,15 +49,14 @@ function MainPage({ className, history }) {
               <Button
                 theme="action"
                 label="Open settings"
+                data-test="btn-settings"
                 onClick={handleSettings}
               />
             </div>
           </section>
         </div>
       </main>
-      <PageFooter
-        className={bn('Footer')}
-      />
+      <PageFooter className={bn('Footer')} />
     </div>
   );
 }
