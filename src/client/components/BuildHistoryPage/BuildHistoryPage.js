@@ -8,7 +8,8 @@ import { classnames } from '@bem-react/classnames';
 
 import './BuildHistoryPage.scss';
 import { getSettingOfRepoName } from '../../services/redux/reducer/settings';
-import { getBuildsCards, fetchBuilds, queueBuild } from '../../services/redux/reducer/builds';
+import { getBuildsCards, fetchBuilds } from '../../services/redux/reducer/builds';
+import useQueueBuildHandler from '../../hooks/useQueueBuildHandler';
 import PageHeader from '../PageHeader';
 import PageFooter from '../PageFooter';
 import Button from '../Button';
@@ -22,11 +23,14 @@ const bn = cn('BuildHistoryPage');
  */
 function BuildHistoryPage(props) {
   const { className, history } = props;
+
   const repoName = useSelector(getSettingOfRepoName);
   const buildsCards = useSelector(getBuildsCards);
   const dispatch = useDispatch();
+
+  const handleQueueBuild = useQueueBuildHandler(history);
   const [isDialogOpen, setDialogOpen] = useState(false);
-  const closeDialog = () => setDialogOpen(false);
+  const handleClose = () => setDialogOpen(false);
 
   useEffect(() => {
     if (!buildsCards) {
@@ -85,14 +89,10 @@ function BuildHistoryPage(props) {
         </div>
         <NewBuildDialog
           isOpen={isDialogOpen}
-          onCancel={closeDialog}
+          onCancel={handleClose}
           onSubmit={({ commit }) => {
-            closeDialog();
-            if (commit) {
-              dispatch(queueBuild(commit)).then(({ id }) => {
-                id && history.push(`/build/${id}`);
-              });
-            }
+            handleClose();
+            handleQueueBuild(commit);
           }}
         />
       </main>

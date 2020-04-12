@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -13,6 +14,7 @@ import {
   fetchBuildLogsById,
 } from '../../services/redux/reducer/builds';
 import { getSettingOfRepoName } from '../../services/redux/reducer/settings';
+import useQueueBuildHandler from '../../hooks/useQueueBuildHandler';
 import PageHeader from '../PageHeader';
 import PageFooter from '../PageFooter';
 import Button from '../Button';
@@ -28,10 +30,13 @@ function BuildDetailsPage(props) {
   const { className, history, match } = props;
   const buildId = match && match.params.id;
 
-  const dispatch = useDispatch();
   const repoName = useSelector(getSettingOfRepoName);
   const buildCard = useSelector((state) => getBuildCardById(state, buildId));
   const buildLogs = useSelector((state) => getBuildLogsById(state, buildId));
+  const dispatch = useDispatch();
+
+  const { commitHash } = buildCard || {};
+  const handleQueueBuild = useQueueBuildHandler(history);
 
   useEffect(() => {
     dispatch(fetchBuildById(buildId));
@@ -50,6 +55,7 @@ function BuildDetailsPage(props) {
             label="Rebuild"
             iconName="rebuild"
             size="s"
+            onClick={() => handleQueueBuild(commitHash)}
           />
           <Button
             label="Settings"
