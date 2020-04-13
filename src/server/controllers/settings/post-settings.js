@@ -15,7 +15,7 @@ const api = require('../../services/ci-api');
 function parseSettings(body) {
   const settings = {};
 
-  ['repoName', 'buildCommand', 'mainBranch'].forEach((param) => {
+  ['repoName', 'buildCommand'].forEach((param) => {
     const paramValue = body[param];
 
     if (!_.isString(paramValue) || _.isEmpty(paramValue)) {
@@ -23,6 +23,10 @@ function parseSettings(body) {
     }
     settings[param] = paramValue;
   });
+
+  const { mainBranch = 'master' } = settings;
+
+  settings.mainBranch = mainBranch;
 
   const period = parseInt(body.period, 10);
 

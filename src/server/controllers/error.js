@@ -5,22 +5,26 @@ const NotFoundError = require('../services/errors/not-found-error');
 // eslint-disable-next-line no-unused-vars
 function handleErrors(err, req, res, _next) {
   const { method, url } = req;
-
-  logger.error(`Request error [${method}] '${url}'`);
-  logger.error('Error: ', err.reason || err.message || err);
+  const tag = `Request error [${method}] '${url}'`;
+  const message = err.toString();
 
   if (err instanceof ValidationError) {
-    return res.status(400).json({
-      error: 'ValidationError',
-      message: err.message,
-    });
+    const error = 'ValidationError';
+
+    logger.error(`${tag} ${error}: ${message}`);
+
+    return res.status(200).json({ error, message });
   }
   if (err instanceof NotFoundError) {
-    return res.status(404).json({
-      error: 'NotFoundError',
-      message: err.message || `The requested resource '${url}' was not found on this server`,
-    });
+    const error = 'NotFoundError';
+
+    logger.error(`${tag} ${error}: ${message}`);
+
+    return res.status(404).json({ error, message });
   }
+
+  logger.error(`${tag} Internal Error ${message}`);
+
   return res.status(500).json({
     error: 'Internal Error',
     message: 'Server has fallen into unrecoverable problem',

@@ -1,9 +1,4 @@
 
-class AppError extends Error {
-  constructor(message, error) {
-    super(message);
-    this.reason = error;
-  }
-}
+class AppError extends Error {}
 
 module.exports = AppError;
