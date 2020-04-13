@@ -42,6 +42,7 @@ function SettingsForm(props) {
           <TextInput
             className={bn('Field')}
             data-test="repoName"
+            id="repoName"
             name="repoName"
             value={values.repoName}
             label="GitHub repository"
