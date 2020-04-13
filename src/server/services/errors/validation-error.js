@@ -1,9 +1,5 @@
 const AppError = require('./app-error');
 
-class ValidationError extends AppError {
-  constructor(message, error) {
-    super(`ValidationError: ${message}`, error);
-  }
-}
+class ValidationError extends AppError {}
 
 module.exports = ValidationError;
