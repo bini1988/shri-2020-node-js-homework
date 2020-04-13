@@ -18,5 +18,8 @@ module.exports = {
     browser.addCommand(
       'createCISettings', require('./hermione/commands/create-settings')
     );
+    browser.addCommand(
+      'createCIBuild', require('./hermione/commands/create-build')
+    );
   }
 };

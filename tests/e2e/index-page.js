@@ -4,6 +4,9 @@ describe('Главная страница', function() {
   beforeEach(async function () {
     this.url = 'http://127.0.0.1:3030/';
   });
+  afterEach(async function () {
+    return this.browser.deleteCISettings();
+  });
 
   it('Если настройки не заданы, должна открываться стартовая страница', async function() {
     return this.browser
