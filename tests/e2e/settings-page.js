@@ -28,7 +28,7 @@ describe('Страница настроек', function() {
       .getAttribute('disabled')
       .then(value => assert.equal(value, 'true'));
   });
-  it.only('Отправка формы после заполнения полей', async function() {
+  it('Отправка формы после заполнения полей', async function() {
     await this.browser
       .url(this.url)
       .waitForVisible('[data-test="settings-page"]');
