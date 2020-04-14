@@ -8,8 +8,9 @@
     "start:server": "cross-env NODE_ENV=development nodemon index.js",
     "start:client": "cross-env NODE_ENV=development webpack-dev-server --color",
     "build:client": "cross-env NODE_ENV=production webpack --color",
-    "test:server": "selenium-standalone start",
+    "test:selenium": "selenium-standalone start",
     "test:e2e": "hermione",
+    "test:server": "mocha ./tests/server/**/*.test.js",
     "test:lint": "eslint ./src/**/*.js"
   },
   "repository": {
@@ -71,6 +72,7 @@
     "@types/react": "^16.9.26",
     "babel-loader": "^8.1.0",
     "chai": "^4.2.0",
+    "chai-spies": "^1.0.0",
     "cross-env": "^7.0.2",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",

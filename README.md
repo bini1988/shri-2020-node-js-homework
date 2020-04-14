@@ -34,7 +34,7 @@
 ## Тестирование
 
 - Установить [selenium-standalone](https://github.com/vvo/selenium-standalone#install--run)
-- Запустить selenium сервер `npm run test:server`
+- Запустить selenium сервер `npm run test:selenium`
 - Запустить приложение `npm run start`
 - Запустить e2e тесты `npm run test:e2e`
 
