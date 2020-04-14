@@ -37,7 +37,7 @@ class CIRepo {
    */
   async clone() {
     if (await exists(this.path)) {
-      await exec('git pull --all');
+      await exec(`git -C ${this.path} fetch --all`);
       logger.info(`CIRepo: pull '${this.url}'`);
     } else {
       await exec(`git clone ${this.url} ${this.path}`);
