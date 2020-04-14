@@ -37,6 +37,7 @@
 - Запустить selenium сервер `npm run test:selenium`
 - Запустить приложение `npm run start`
 - Запустить e2e тесты `npm run test:e2e`
+- Запустить unit тесты `npm run test:server`
 
 ### Cценарии проверяемые интеграционными тестами
 
