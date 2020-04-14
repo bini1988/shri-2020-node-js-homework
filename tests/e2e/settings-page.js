@@ -1,5 +1,5 @@
 const assert = require('chai').assert;
-const mockSettings =require('../../hermione/mocks/settings');
+const mockSettings =require('../../mocks/settings');
 
 describe('Страница настроек', function() {
   beforeEach(async function () {

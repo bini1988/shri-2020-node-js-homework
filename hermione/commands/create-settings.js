@@ -1,5 +1,5 @@
 const api = require('../../src/server/services/ci-api');
-const mockSettings = require('../mocks/settings');
+const mockSettings = require('../../mocks/settings');
 
 /**
  * Создать набор настроеки CI системы

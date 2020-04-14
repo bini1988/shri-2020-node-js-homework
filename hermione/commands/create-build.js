@@ -1,5 +1,5 @@
 const api = require('../../src/server/services/ci-api');
-const mockBuild = require('../mocks/build');
+const mockBuild = require('../../mocks/build');
 
 /**
  * Создать сборку
