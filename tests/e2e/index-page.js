@@ -22,7 +22,7 @@ describe('Главная страница', function() {
       .isExisting('[data-test="build-history-page"]')
       .then(assert.isTrue);
   });
-  it('Осуществляется переход со история сборок на страницу настроек', async function() {
+  it('Осуществляется переход со страницы история сборок на страницу настроек', async function() {
     await this.browser.createCISettings();
 
     await this.browser
@@ -35,6 +35,33 @@ describe('Главная страница', function() {
       .$('[data-test="btn-settings"]').click()
       .waitForVisible('[data-test="settings-page"]', 3000)
       .isExisting('[data-test="settings-page"]')
+      .then(assert.isTrue);
+  });
+  it('Запуск сборки с заданного коммита со страницы история сборок', async function() {
+    await this.browser.createCISettings();
+
+    await this.browser
+      .url(this.url)
+      .waitForVisible('[data-test="build-history-page"]', 3000)
+      .isExisting('[data-test="btn-build"]')
+      .then(assert.isTrue);
+
+    const formQuery = '[data-test="new-build-form"]';
+
+    await this.browser
+      .$('[data-test="btn-build"]').click()
+      .waitForVisible(formQuery, 300)
+      .isExisting(formQuery)
+      .then(assert.isTrue);
+
+    await this.browser
+      .$(`${formQuery} [data-test="commit"] [data-test="input"]`)
+      .setValue('master');
+
+    await this.browser
+      .$(`${formQuery} [data-test="submit"]`).click()
+      .waitForVisible('[data-test="build-details-page"]', 3000)
+      .isExisting('[data-test="build-details-page"]')
       .then(assert.isTrue);
   });
 });
