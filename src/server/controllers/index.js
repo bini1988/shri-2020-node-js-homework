@@ -24,7 +24,7 @@ async function fetchBuildById(buildId) {
  * Получить список сборок
  */
 async function fetchBuilds() {
-  const { data: { data = [] } = {} } = await api.Build.fetchBuilds();
+  const { data = [] } = await api.Build.fetchBuilds();
 
   return {
     buildsIds: data.map((build) => build.id),
