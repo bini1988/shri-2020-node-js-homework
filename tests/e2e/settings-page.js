@@ -4,6 +4,7 @@ const mockSettings =require('../../mocks/settings');
 describe('Страница настроек', function() {
   beforeEach(async function () {
     this.url = 'http://127.0.0.1:3030/settings';
+    await this.browser.deleteCISettings();
   });
 
   it('Осуществляется переход на страницу настроек', function() {

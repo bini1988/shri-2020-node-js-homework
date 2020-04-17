@@ -20,6 +20,9 @@ module.exports = {
       'createCISettings', require('./hermione/commands/create-settings')
     );
     browser.addCommand(
+      'ensureCISettings', require('./hermione/commands/ensure-settings')
+    );
+    browser.addCommand(
       'createCIBuild', require('./hermione/commands/create-build')
     );
   }
