@@ -15,7 +15,7 @@ describe('Страница настроек', function() {
   it('Отображается форма настроек', function() {
     return this.browser
       .url(this.url)
-      .waitForVisible('[data-test="settings-page"]')
+      .waitForVisible('[data-test="settings-page"]', 3000)
       .isExisting('[data-test="settings-form"]')
       .then(assert.isTrue);
   });
