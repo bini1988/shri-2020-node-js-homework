@@ -17,6 +17,10 @@ describe('Server builds routes', function () {
     };
     app.locals.ci = {
       run: chai.spy.returns(Promise.resolve(buildsMock[0])),
+      logs: chai.spy.interface({
+        fetchLogsByBuildId: (buildId) => (buildsMock[0].id === buildId)
+          ? Promise.resolve(buildId) : Promise.reject(),
+      }),
     };
   });
 
@@ -134,6 +138,40 @@ describe('Server builds routes', function () {
             .to.equal('NotFoundError');
           chai.expect(message)
             .to.equal(`Error: Build with id '${buildId}' is not found`);
+        });
+    });
+  });
+  describe('GET /builds/:buildId/logs', function () {
+    it('GET /builds/:buildId/logs with existing buildId', function () {
+      const buildId = buildsMock[0].id;
+
+      return request(app)
+        .get(`/api/builds/${buildId}/logs`)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .then((response) => response.body)
+        .then(({ data }) => {
+          chai.expect(data)
+            .to.deep.equal(buildId);
+          chai.expect(app.locals.ci.logs.fetchLogsByBuildId)
+            .to.have.been.called.with(buildId);
+        });
+    });
+    it('GET /builds/:buildId/logs with not existing buildId', function () {
+      const buildId = buildsMock[1].id;
+
+      return request(app)
+        .get(`/api/builds/${buildId}/logs`)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(404)
+        .then((response) => response.body)
+        .then(({ error, message }) => {
+          chai.expect(error)
+            .to.equal('NotFoundError');
+          chai.expect(message)
+            .to.equal(`Error: Log of build with id '${buildId}' is not found`);
         });
     });
   });
