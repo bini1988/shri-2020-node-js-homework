@@ -111,8 +111,7 @@ class CILogs {
 
     if (cache !== null) { return cache; }
 
-    const { data = {} } = await api.Build.fetchBuild(buildId);
-    const { data: { status } = {} } = data;
+    const { data: { status } = {} } = await api.Build.fetchBuild(buildId);
     const { data: log } = await api.Build.fetchBuildLog(buildId);
 
     if (status !== 'Waiting' && status !== 'InProgress') {

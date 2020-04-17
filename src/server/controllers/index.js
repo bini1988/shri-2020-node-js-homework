@@ -16,8 +16,12 @@ async function fetchSettings() {
  * @param {string} [buildId] Индентификатор билда
  */
 async function fetchBuildById(buildId) {
-  const { data } = await api.Build.fetchBuild(buildId);
-  return data.data;
+  try {
+    const { data } = await api.Build.fetchBuild(buildId);
+    return data;
+  } catch (error) {
+    return undefined;
+  }
 }
 
 /**
@@ -61,6 +65,11 @@ const handleIndex = asyncHandler(async (req, res) => {
   const { buildId } = params;
 
   const initialState = await fetchInitialState(buildId);
+
+  if (buildId && !initialState.builds.buildsMap[buildId]) {
+    res.redirect('/');
+    return;
+  }
   const serializedState = serialize(initialState);
 
   const appMarkup = (process.env.NODE_ENV === 'production')

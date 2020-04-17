@@ -19,7 +19,9 @@ module.exports = {
    * @param {string} buildId Индентификатор сборки
    */
   fetchBuild(buildId) {
-    return axios.get('/build/details', { params: { buildId } });
+    const params = { buildId };
+    return axios.get('/build/details', { params })
+      .then(({ data }) => data);
   },
   /**
    * Получить лог для сбороки
