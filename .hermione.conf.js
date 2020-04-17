@@ -7,8 +7,9 @@ module.exports = {
   browsers: {
     chrome: {
       desiredCapabilities: {
-        browserName: 'chrome'
-      }
+        browserName: 'chrome',
+      },
+      retry: 3,
     }
   },
   prepareBrowser: function(browser) {
