@@ -3,6 +3,7 @@ const chai = require('chai');
 const spies = require('chai-spies')
 const { app } = require('../../../src/server/index');
 const settingsMock = require('../../../mocks/settings');
+const setupMock = require('../../../mocks/setup');
 
 chai.use(spies);
 
@@ -16,7 +17,7 @@ describe('Server settings routes', function () {
       },
     };
     app.locals.ci = {
-      setup: chai.spy.returns(Promise.resolve(settingsMock)),
+      setup: chai.spy.returns(Promise.resolve(setupMock)),
     };
   });
 
@@ -41,10 +42,13 @@ describe('Server settings routes', function () {
         .expect('Content-Type', /json/)
         .expect(200)
         .then((response) => response.body)
-        .then(({ data }) => {
-          chai.expect(data).to.deep.equal(settingsMock);
-          chai.expect(app.locals.api.Settings.save).to.have.been.called.with(settingsMock);
-          chai.expect(app.locals.ci.setup).to.have.been.called.with(settingsMock);
+        .then(({ data: { settings, build } = {} }) => {
+          chai.expect(settings).to.deep.equal(settingsMock);
+          chai.expect(build).to.deep.equal(setupMock);
+          chai.expect(app.locals.api.Settings.save)
+            .to.have.been.called.with(settingsMock);
+          chai.expect(app.locals.ci.setup)
+            .to.have.been.called.with(settings);
         });
     });
     it('POST empty repo name setting', function () {
@@ -56,9 +60,12 @@ describe('Server settings routes', function () {
         .expect(200)
         .then((response) => response.body)
         .then(({ error, message }) => {
-          chai.expect(error).to.equal('ValidationError');
-          chai.expect(message).to.equal('Error: The name of the repo is required');
-          chai.expect(app.locals.api.Settings.save).to.have.not.been.called();
+          chai.expect(error)
+            .to.equal('ValidationError');
+          chai.expect(message)
+            .to.equal('Error: The name of the repo is required');
+          chai.expect(app.locals.api.Settings.save)
+            .to.have.not.been.called();
         });
     });
     it('POST empty build command setting', function () {
@@ -70,9 +77,12 @@ describe('Server settings routes', function () {
         .expect(200)
         .then((response) => response.body)
         .then(({ error, message }) => {
-          chai.expect(error).to.equal('ValidationError');
-          chai.expect(message).to.equal('Error: The build command is required');
-          chai.expect(app.locals.api.Settings.save).to.have.not.been.called();
+          chai.expect(error)
+            .to.equal('ValidationError');
+          chai.expect(message)
+            .to.equal('Error: The build command is required');
+          chai.expect(app.locals.api.Settings.save)
+            .to.have.not.been.called();
         });
     });
     it('POST settings with default values ', function () {
@@ -86,8 +96,10 @@ describe('Server settings routes', function () {
         .then(() => {
           const settings = { ...settingsMock, mainBranch: 'master', period: 0 };
 
-          chai.expect(app.locals.api.Settings.save).to.have.been.called.with(settings);
-          chai.expect(app.locals.ci.setup).to.have.been.called.with(settings);
+          chai.expect(app.locals.api.Settings.save)
+            .to.have.been.called.with(settings);
+          chai.expect(app.locals.ci.setup)
+            .to.have.been.called.with(settings);
         });
     });
   });
@@ -97,7 +109,8 @@ describe('Server settings routes', function () {
       .expect(200)
       .then((response) => response.body)
       .then(() => {
-        chai.expect(app.locals.api.Settings.delete).to.have.been.called();
+        chai.expect(app.locals.api.Settings.delete)
+          .to.have.been.called();
       });
   });
 });
