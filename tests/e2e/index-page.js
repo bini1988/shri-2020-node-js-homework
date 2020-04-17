@@ -22,4 +22,19 @@ describe('Главная страница', function() {
       .isExisting('[data-test="build-history-page"]')
       .then(assert.isTrue);
   });
+  it('Осуществляется переход со история сборок на страницу настроек', async function() {
+    await this.browser.createCISettings();
+
+    await this.browser
+      .url(this.url)
+      .waitForVisible('[data-test="build-history-page"]', 3000)
+      .isExisting('[data-test="btn-settings"]')
+      .then(assert.isTrue);
+
+    return this.browser
+      .$('[data-test="btn-settings"]').click()
+      .waitForVisible('[data-test="settings-page"]', 3000)
+      .isExisting('[data-test="settings-page"]')
+      .then(assert.isTrue);
+  });
 });
