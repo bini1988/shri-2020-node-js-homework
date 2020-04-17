@@ -49,7 +49,9 @@ export function fetchSettings() {
  */
 export function saveSettings(values) {
   return (dispatch) => Api.Settings.saveSettings(values)
-    .then(({ data }) => { dispatch(storeSettings(data)); });
+    .then(({ data: { settings } }) => {
+      dispatch(storeSettings(settings));
+    });
 }
 
 /**
