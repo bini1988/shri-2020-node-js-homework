@@ -10,8 +10,13 @@ describe('Server builds routes', function () {
   beforeEach(() => {
     app.locals.api = {
       Build: {
-        fetchBuilds: chai.spy.returns(Promise.resolve({ data: buildsMock })),
+        fetchBuilds: chai.spy.returns(
+          Promise.resolve({ data: buildsMock })
+        ),
       },
+    };
+    app.locals.ci = {
+      run: chai.spy.returns(Promise.resolve(buildsMock[0])),
     };
   });
 
@@ -84,4 +89,21 @@ describe('Server builds routes', function () {
         });
     });
   });
+  it('POST api/builds/:commitHash', function () {
+    const commitHash = '96233c2';
+
+    return request(app)
+      .post(`/api/builds/${commitHash}`)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .then((response) => response.body)
+      .then(({ data }) => {
+        chai.expect(data)
+          .to.deep.equal(buildsMock[0]);
+        chai.expect(app.locals.ci.run)
+          .to.have.been.called.with(commitHash);
+      });
+  });
+
 });
