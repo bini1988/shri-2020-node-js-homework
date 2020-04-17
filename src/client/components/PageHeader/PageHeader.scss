@@ -1,0 +1,33 @@
+@import "common/sass/mixins";
+
+.PageHeader {
+  padding-top: var(--space-m);
+  padding-bottom: var(--space-m);
+
+  @include bp-desktop {
+    padding-top: var(--space-s);
+    padding-bottom: var(--space-s);
+  }
+}
+
+.PageHeader-Container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.PageHeader-Link {
+  text-decoration: none;
+}
+
+.PageHeader-Title {
+  flex: 0 1 auto;
+  margin: 0;
+  margin-right: var(--space-xs);
+}
+
+.PageHeader-Aside {
+  flex: 0 1 auto;
+
+  display: flex;
+  align-items: flex-start;
+}

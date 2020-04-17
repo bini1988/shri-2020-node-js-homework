@@ -1,0 +1,8 @@
+/*
+*.test.*
+*.config.js
+__mocks__/
+node_modules/
+coverage/
+
+!/src

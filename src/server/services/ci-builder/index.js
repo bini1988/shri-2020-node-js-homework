@@ -30,7 +30,7 @@ class CIBuilder {
   enqueue({ buildId, pwd, cmd }) {
     this._queue.enqueue({ buildId, pwd, cmd });
 
-    logger.info(`Enqueue build ${buildId} (#${this._queue.size} in queue)`);
+    logger.info(`CIBuilder: Enqueue build ${buildId} (#${this._queue.size} in queue)`);
 
     // Если обратка очереди закончена запустим цикл
     // обработки очереди
@@ -53,7 +53,7 @@ class CIBuilder {
     // Эмуляция сборки
     await sleep(3000, pwd, cmd);
 
-    const duration = Math.floor(Math.random() * 60 * 60); // сек
+    const duration = Math.floor(Math.random() * 2 * 60 * 60 * 1000); // мсек
     const success = (Math.random() > 0.5);
     const buildLog = buildLogMock;
 
@@ -78,10 +78,10 @@ class CIBuilder {
    */
   async handleBuildStart(build) {
     try {
-      logger.info(`Start build execution for ${build.buildId}`);
+      logger.info(`CIBuilder: Start build execution for ${build.buildId}`);
       await api.Build.startBuild(build);
     } catch (error) {
-      logger.error(`Start build request failed for ${build.id}`, error);
+      logger.error(`CIBuilder: Start build request failed for ${build.buildId}`, error);
     }
   }
 
@@ -91,10 +91,10 @@ class CIBuilder {
    */
   async handleBuildFinish(build) {
     try {
-      logger.info(`Finish build execution for ${build.buildId}`);
+      logger.info(`CIBuilder: Finish build execution for ${build.buildId}`);
       await api.Build.finishBuild(build);
     } catch (error) {
-      logger.error(`Finish build request failed for ${build.buildId}`, error);
+      logger.error(`CIBuilder: Finish build request failed for ${build.buildId}`, error);
     }
   }
 }

@@ -30,6 +30,9 @@ module.exports = (async () => {
 
   app.locals.ci = new CIManager({ settings, tmp });
 
+  app.set('views', './src/server/views');
+  app.set('view engine', 'ejs');
+
   app.use(express.static(STATIC_FOLDER));
   app.use(bodyParser.json());
 

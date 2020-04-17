@@ -19,7 +19,7 @@ module.exports = asyncHandler(async (req, res) => {
   try {
     const data = await ci.logs.fetchLogsByBuildId(buildId);
 
-    res.status(200).send(data);
+    res.status(200).json({ data });
   } catch (error) {
     throw new NotFoundError(`Log of build with id '${buildId}' is not found`, error);
   }

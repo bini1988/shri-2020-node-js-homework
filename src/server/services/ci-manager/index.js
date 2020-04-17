@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable class-methods-use-this */
 const EventEmitter = require('events');
+const logger = require('../logger');
 const api = require('../ci-api');
 const CIBuilder = require('../ci-builder');
 const CILogs = require('../ci-logs');
@@ -29,6 +30,10 @@ class CIManager extends EventEmitter {
     const { settings = {}, tmp } = params;
     const { repoName } = settings;
 
+    /**
+     * @type {string}
+     */
+    this._tmp = tmp;
     /**
      * @type {Settings}
      */
@@ -65,20 +70,18 @@ class CIManager extends EventEmitter {
       mainBranch = 'master',
       period = 10,
     } = settings;
+    const tmp = this._tmp;
 
     this._settings = {
-      repoName,
-      buildCommand,
-      mainBranch,
-      period,
+      repoName, buildCommand, mainBranch, period,
     };
+    this._repo = new CIRepo({ repoName, tmp });
 
-    if (this._repo.name !== repoName) {
-      this._repo = new CIRepo(repoName);
-      await this._repo.clone();
-    }
-    // Автоматически запускаем сборку при изменении параметров
-    this.run(mainBranch);
+    logger.info(`CIManager: cloning '${repoName}' repo`);
+
+    await this._repo.clone();
+
+    return this.run(mainBranch);
   }
 
   /**
@@ -87,6 +90,10 @@ class CIManager extends EventEmitter {
    * @return {Promise}
    */
   async run(commitHash) {
+    logger.info(commitHash
+      ? `CIManager: run for '${commitHash}'`
+      : 'CIManager: run');
+
     if (!this._repo) {
       throw new Error('Setup CI repo settings first');
     }
@@ -99,6 +106,8 @@ class CIManager extends EventEmitter {
     const { id: buildId } = data;
     const cmd = this._settings.buildCommand;
     const pwd = this._repo.path;
+
+    logger.info(`CIManager: enqueue build '${buildId}'`);
 
     // Ставим билд в очередь
     this._builder.enqueue({ buildId, cmd, pwd });

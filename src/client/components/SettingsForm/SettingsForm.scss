@@ -1,0 +1,67 @@
+@import "common/sass/mixins";
+
+.SettingsForm {
+  max-width: 474px;
+}
+
+.SettingsForm-Title,
+.SettingsForm-Text {
+  margin-top: var(--space-xs);
+  margin-bottom: var(--space-xs);
+}
+
+.SettingsForm-Title {
+  margin-top: 14px;
+  font-size: var(--text-size-m);
+  line-height: var(--text-line-height-l);
+
+  @include bp-desktop {
+    margin-top: 8px;
+  }
+}
+
+.SettingsForm-Text {
+  margin-bottom: var(--space-l);
+
+  color: var(--color-text-secondary);
+  line-height: var(--text-line-height-m);
+
+
+  @include bp-desktop {
+    margin-bottom: 22px;
+  }
+}
+
+.SettingsForm-Fieldset {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.SettingsForm-Field {
+  margin-bottom: 18px;
+}
+
+.SettingsForm-Field:last-child {
+  margin-bottom: 0;
+}
+
+.SettingsForm-Footer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+
+  @include bp-desktop {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.SettingsForm-Button + .SettingsForm-Button {
+  margin-top: var(--space-m);
+
+  @include bp-desktop {
+    margin-top: 0;
+    margin-left: var(--space-xs);
+  }
+}

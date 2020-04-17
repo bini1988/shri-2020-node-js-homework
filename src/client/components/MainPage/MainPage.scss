@@ -1,0 +1,43 @@
+
+.MainPage {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.MainPage-Link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.MainPage-Header,
+.MainPage-Footer {
+  flex: 0 1 auto;
+}
+
+.MainPage-Main {
+  flex: 1 1 auto;
+
+  display: flex;
+  align-items: center;
+}
+
+.MainPage-Wrapper {
+  margin: 0 auto;
+  width: 264px;
+
+  text-align: center;
+}
+
+.MainPage-Logo {
+  margin-bottom: var(--space-m);
+}
+
+.MainPage-Label {
+  margin-top: var(--space-l);
+  margin-bottom: var(--space-xl);
+}
+
+.MainPage-Intro {
+  margin-bottom: var(--space-m);
+}

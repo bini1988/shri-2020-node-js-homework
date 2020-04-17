@@ -1,0 +1,54 @@
+@import "common/sass/mixins";
+
+.BuildHistoryPage {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.BuildHistoryPage-Header,
+.BuildHistoryPage-Footer {
+  flex: 0 1 auto;
+}
+
+.BuildHistoryPage-Main {
+  flex: 1 1 auto;
+}
+
+.BuildHistoryPage-Aside {
+  button + button {
+    margin-left: 8px;
+  }
+}
+
+.BuildHistoryPage-History {
+  margin: 8px 0 20px;
+}
+
+.BuildHistoryPage-Title {
+  @include visually-hidden();
+}
+
+.BuildHistoryPage-Items {
+  margin: 0;
+  padding: 0;
+
+  list-style-type: none;
+}
+
+.BuildHistoryPage-Item {
+  margin-bottom: 8px;
+}
+
+.BuildHistoryPage-Link {
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.BuildHistoryPage-More {
+  width: 100%;
+
+  @include bp-desktop {
+    width: auto;
+  }
+}

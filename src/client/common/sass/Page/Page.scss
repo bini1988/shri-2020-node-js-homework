@@ -1,0 +1,36 @@
+.Page {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+
+  font-family: "YS Text", "Helvetica Neue", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: var(--text-size-s);
+  line-height: var(--text-line-height-s);
+  color: var(--color-text-primary);
+
+  background-color: var(--color-bg-default);
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.Page-App {
+  position: relative;
+  min-height: 100vh;
+}
+
+.Page-Loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -32px;
+  margin-left: -32px;
+}
+
+.Page_noscroll {
+  overflow: hidden;
+}

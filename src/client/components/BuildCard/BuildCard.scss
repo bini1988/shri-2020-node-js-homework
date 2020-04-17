@@ -1,0 +1,182 @@
+@import "common/sass/mixins";
+
+.BuildCard {
+  border-radius: 6px;
+  background-color: var(--color-bg-default);
+  box-shadow:
+    0 1px 1px rgba(67, 68, 69, 0.3),
+    0 0 1px rgba(67, 68, 69, 0.3);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.BuildCard-Wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+
+  position: relative;
+
+  padding: 16px;
+  padding-left: 36px;
+  padding-right: 7px;
+
+  @include bp-desktop {
+    flex-direction: row;
+
+    padding: 12px;
+    padding-left: 56px;
+  }
+}
+
+.BuildCard-Status {
+  position: absolute;
+  top: 16px;
+  left: 13px;
+
+  font-size: 0;
+
+  @include bp-desktop {
+    top: 13px;
+    left: 25px;
+  }
+}
+
+.BuildCard-Icon {
+  width: 16px;
+  height: 16px;
+
+  fill: currentColor;
+
+  @include bp-desktop {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.BuildCard-Content {
+  flex: 1 1 auto;
+}
+
+.BuildCard-Title {
+  margin: 0;
+  margin-bottom: var(--space-xs);
+
+  font-size: var(--text-size-m);
+  line-height: var(--text-line-height-l);
+  font-weight: normal;
+}
+
+.BuildCard-No {
+  display: block;
+  margin-bottom: var(--space-xs);
+
+  font-size: var(--text-size-l);
+  line-height: var(--text-line-height-s);
+  font-weight: 500;
+
+  @include bp-desktop {
+    display: inline-block;
+    margin-bottom: 0;
+
+    font-size: var(--text-size-xl);
+    line-height: var(--text-line-height-l);
+  }
+}
+
+.BuildCard-Text {
+  font-size: var(--text-size-m);
+  line-height: var(--text-line-height-l);
+}
+
+.BuildCard-Meta {
+  display: flex;
+  flex-direction: column;
+
+  @include bp-desktop {
+    flex-direction: row;
+  }
+}
+
+.BuildCard-Meta > * {
+  margin-bottom: var(--space-xs);
+  margin-right: var(--space-s);
+
+  @include bp-desktop {
+    margin-bottom: 0;
+  }
+}
+
+.BuildCard-Aside {
+  flex: 0 0 auto;
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--color-bg-accent);
+
+  @include bp-desktop {
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+    border: none;
+  }
+}
+
+.BuildCard-Aside > * + * {
+  margin-left: var(--space-xs);
+
+  @include bp-desktop {
+    margin-top: var(--space-m);
+    margin-left: 0;
+  }
+}
+
+.BuildCard_interactive {
+  cursor: pointer;
+}
+
+.BuildCard_interactive:hover {
+  box-shadow:
+    0 2px 8px rgba(67, 68, 69, 0.3),
+    0 0 1px rgba(67, 68, 69, 0.3);
+}
+
+.BuildCard_view_details .BuildCard-Content {
+  width: 100%;
+}
+
+.BuildCard_view_details .BuildCard-Content {
+  margin-bottom: var(--space-xs);
+}
+
+.BuildCard_view_details .BuildCard-Aside {
+  flex: 0 0 auto;
+  display: block;
+  padding-top: var(--space-xs);
+  width: 100%;
+  border-top: 1px solid var(--color-bg-accent);
+}
+
+.BuildCard_view_details .BuildCard-Time + .BuildCard-Time {
+  margin-left: 10px;
+}
+
+.BuildCard_status_Success {
+  .BuildCard-Status,
+  .BuildCard-No {
+    color: var(--color-success);
+  }
+}
+
+.BuildCard_status_Fail,
+.BuildCard_status_Canceled {
+  .BuildCard-Status,
+  .BuildCard-No {
+    color: var(--color-fail);
+  }
+}
+
+.BuildCard_status_Waiting,
+.BuildCard_status_InProgress {
+  .BuildCard-Status,
+  .BuildCard-No {
+    color: var(--color-pending);
+  }
+}

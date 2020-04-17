@@ -1,0 +1,35 @@
+@import "common/sass/mixins";
+
+.NewBuildForm {
+  max-width: 474px;
+}
+
+.NewBuildForm-Title {
+  margin: 0;
+  font-size: var(--text-size-xl);
+  line-height: var(--text-line-height-xl);
+}
+.NewBuildForm-Text {
+  margin-top: var(--space-m);
+  margin-bottom: var(--space-m);
+}
+
+.NewBuildForm-Footer {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--space-m);
+
+  @include bp-desktop {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.NewBuildForm-Button + .NewBuildForm-Button {
+  margin-top: var(--space-m);
+
+  @include bp-desktop {
+    margin-top: 0;
+    margin-left: var(--space-xs);
+  }
+}

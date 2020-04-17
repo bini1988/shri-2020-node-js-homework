@@ -9,7 +9,7 @@ module.exports = {
    * @param {number} [offset]
    * @param {number} [limit]
    */
-  fetchBuilds(offset = 0, limit = 25) {
+  fetchBuilds(offset = 0, limit = 9) {
     return axios.get('/build/list', { params: { offset, limit } });
   },
   /**

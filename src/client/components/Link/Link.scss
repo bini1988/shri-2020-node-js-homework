@@ -1,0 +1,12 @@
+
+.Link {
+  color: var(--color-text-secondary);
+  line-height: var(--text-line-height-m);
+  text-decoration: none;
+}
+
+.Link:hover,
+.Link:active,
+.Link:focus {
+  color: var(--color-link-hovered);
+}

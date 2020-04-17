@@ -1,0 +1,25 @@
+@import "common/sass/mixins";
+
+.Title {
+  color: var(--color-text-secondary);
+
+  font-size: var(--text-size-xl);
+  font-weight: 500;
+  font-style: normal;
+
+  line-height: var(--text-line-height-xl);
+  letter-spacing: 0.25px;
+
+  @include bp-desktop {
+    font-size: var(--text-size-xxl);
+    line-height: var(--text-line-height-xxl);
+  }
+}
+
+.Title_accent {
+  color: var(--color-text-primary);
+
+  @include bp-desktop {
+    line-height: var(--text-line-height-xxxl);
+  }
+}

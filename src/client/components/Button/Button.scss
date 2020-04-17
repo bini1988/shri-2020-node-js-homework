@@ -1,0 +1,90 @@
+@import "common/sass/mixins";
+
+.Button {
+  display: inline-block;
+  vertical-align: top;
+
+  padding: 0;
+
+  color: var(--color-text-primary);
+  font-size: var(--text-size-s);
+  line-height: var(--text-line-height-s);
+  text-decoration: none;
+
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background-color: var(--color-bg-control);
+
+  transition: all 0.3s ease-in-out;
+
+  cursor: pointer;
+  outline: none;
+}
+
+.Button-Wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 13px;
+  min-height: 24px;
+}
+
+.Button-Icon {
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin-bottom: 1px;
+  fill: var(--color-text-primary);
+}
+
+.Button-Label {
+  margin: 0 5px;
+}
+
+.Button:not(:disabled):hover {
+  background-color: var(--color-bg-control-hovered);
+}
+
+.Button:not(:disabled):focus {
+  border-color: var(--color-bg-control-outline);
+}
+
+.Button:disabled {
+  cursor: default;
+  background-color: var(--color-bg-control-disabled);
+}
+.Button:disabled .Button-Label {
+  opacity: 0.5;
+}
+
+.Button_theme_action {
+  background-color: var(--color-bg-action);
+}
+
+.Button_theme_action:not(:disabled):hover {
+  background-color: var(--color-bg-action-hovered);
+}
+
+.Button_theme_action:not(:disabled):focus {
+  border-color: var(--color-bg-action-outline);
+}
+
+.Button_theme_secondary {
+  border: 2px solid var(--color-border-default);
+  background-color: transparent;
+}
+
+.Button_size_s .Button-Wrapper {
+  padding: 4px 6px;
+}
+
+.Button_view_tile .Button-Label,
+.Button_adaptive .Button-Label {
+  display: none;
+}
+
+.Button_adaptive .Button-Label {
+  @include bp-desktop {
+    display: inline-block;
+  };
+}

@@ -1,9 +1,10 @@
 const util = require('util');
 const path = require('path');
 const fs = require('fs');
+const logger = require('../logger');
 const exec = require('../utils/exec');
 
-const access = util.promisify(fs.access);
+const exists = util.promisify(fs.exists);
 const TMP_DIR = process.env.TMP_DIR || 'tmp';
 const SPLIT_CHAR = '<##>';
 
@@ -35,14 +36,12 @@ class CIRepo {
    * Клонивать репозиторий в локальную директорию
    */
   async clone() {
-    try {
-      await access(this.path, fs.constants.F_OK);
-      await exec('git pull --all');
-      return this;
-    } catch (error) {
-      // Делаем локальную копию репозитория во временную директорию
+    if (await exists(this.path)) {
+      await exec(`git -C ${this.path} fetch --all`);
+      logger.info(`CIRepo: pull '${this.url}'`);
+    } else {
       await exec(`git clone ${this.url} ${this.path}`);
-      return this;
+      logger.info(`CIRepo: clone '${this.url}'`);
     }
   }
 
@@ -68,6 +67,7 @@ class CIRepo {
    */
   async checkout(branch) {
     await exec(`git -C ${this.path} checkout ${branch}`);
+    logger.info(`CIRepo: checkout '${this.url}' on ${branch}`);
   }
 
   /**
