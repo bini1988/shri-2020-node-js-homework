@@ -9,11 +9,11 @@ chai.use(spies);
 describe('Server builds routes', function () {
   beforeEach(() => {
     app.locals.api = {
-      Build: {
-        fetchBuilds: chai.spy.returns(
-          Promise.resolve({ data: buildsMock })
-        ),
-      },
+      Build: chai.spy.interface({
+        fetchBuilds: () => Promise.resolve({ data: buildsMock }),
+        fetchBuild: (buildId) => (buildsMock[0].id === buildId)
+            ? Promise.resolve({ data: buildsMock[0] }) : Promise.reject(),
+      }),
     };
     app.locals.ci = {
       run: chai.spy.returns(Promise.resolve(buildsMock[0])),
@@ -105,5 +105,36 @@ describe('Server builds routes', function () {
           .to.have.been.called.with(commitHash);
       });
   });
+  describe('GET api/builds/:buildId', function () {
+    it('GET api/builds/:buildId with existing buildId', function () {
+      const buildId = buildsMock[0].id;
 
+      return request(app)
+        .get(`/api/builds/${buildId}`)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200)
+        .then((response) => response.body)
+        .then(({ data }) => {
+          chai.expect(data)
+            .to.deep.equal(buildsMock[0]);
+        });
+    });
+    it('GET api/builds/:buildId with not existing buildId', function () {
+      const buildId = buildsMock[1].id;
+
+      return request(app)
+        .get(`/api/builds/${buildId}`)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(404)
+        .then((response) => response.body)
+        .then(({ error, message }) => {
+          chai.expect(error)
+            .to.equal('NotFoundError');
+          chai.expect(message)
+            .to.equal(`Error: Build with id '${buildId}' is not found`);
+        });
+    });
+  });
 });
