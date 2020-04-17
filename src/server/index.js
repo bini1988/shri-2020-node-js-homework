@@ -36,7 +36,7 @@ if (process.env.API_TOKEN === 'API_AUTH_TOKEN') {
  * Инициализация и запуск сервера
  */
 async function run() {
-  const tmp = path.join(__dirname, TMP_DIR);
+  const tmp = path.join(process.cwd(), TMP_DIR);
 
   if (!fs.existsSync(tmp)) {
     fs.mkdirSync(tmp);
