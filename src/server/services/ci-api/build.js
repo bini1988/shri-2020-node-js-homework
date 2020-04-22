@@ -10,14 +10,18 @@ module.exports = {
    * @param {number} [limit]
    */
   fetchBuilds(offset = 0, limit = 9) {
-    return axios.get('/build/list', { params: { offset, limit } });
+    const params = { offset, limit };
+    return axios.get('/build/list', { params })
+      .then(({ data }) => data);
   },
   /**
    * Получить сбороку
    * @param {string} buildId Индентификатор сборки
    */
   fetchBuild(buildId) {
-    return axios.get('/build/details', { params: { buildId } });
+    const params = { buildId };
+    return axios.get('/build/details', { params })
+      .then(({ data }) => data);
   },
   /**
    * Получить лог для сбороки

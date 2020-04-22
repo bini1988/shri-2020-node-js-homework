@@ -8,7 +8,8 @@ module.exports = {
    * Получить настройки
    */
   fetch() {
-    return axios.get('/conf');
+    return axios.get('/conf')
+      .then(({ data }) => data);
   },
   /**
    * Сохранить настройки
@@ -19,7 +20,8 @@ module.exports = {
    * @param {number} settings.period Период мониторига состояния репозитория
    */
   save(settings) {
-    return axios.post('/conf', settings);
+    return axios.post('/conf', settings)
+      .then(({ data }) => data);
   },
   /**
    * Удалить сохраненные настройки

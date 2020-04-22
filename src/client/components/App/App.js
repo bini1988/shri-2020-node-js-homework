@@ -24,7 +24,7 @@ function App({ router = {} }) {
         <Switch>
           <Route exact path="/" component={IndexPage} />
           <Route path="/settings" component={SettingsPage} />
-          <Route path="/build/:id" component={BuildDetailsPage} />
+          <Route path="/build/:id(\w{8}-\w{4}-\w{4}-\w{4}-\w{12})" component={BuildDetailsPage} />
           <Route render={() => <Redirect to="/" />} />
         </Switch>
       </Router>

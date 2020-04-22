@@ -12,6 +12,7 @@ function handleErrors(err, req, res, _next) {
     const error = 'ValidationError';
 
     logger.error(`${tag} ${error}: ${message}`);
+    logger.error(err.stack);
 
     return res.status(200).json({ error, message });
   }
@@ -19,11 +20,13 @@ function handleErrors(err, req, res, _next) {
     const error = 'NotFoundError';
 
     logger.error(`${tag} ${error}: ${message}`);
+    logger.error(err.stack);
 
     return res.status(404).json({ error, message });
   }
 
   logger.error(`${tag} Internal Error ${message}`);
+  logger.error(err.stack);
 
   return res.status(500).json({
     error: 'Internal Error',

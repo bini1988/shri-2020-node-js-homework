@@ -7,8 +7,8 @@ const { renderAppToString } = require('../../../static/main.bundle.ssr');
  * Получить набор настроек
  */
 async function fetchSettings() {
-  const { data: { data = {} } = {} } = await api.Settings.fetch();
-  return data.repoName ? data : null;
+  const { data: settings = {} } = await api.Settings.fetch();
+  return settings.repoName ? settings : null;
 }
 
 /**
@@ -16,15 +16,19 @@ async function fetchSettings() {
  * @param {string} [buildId] Индентификатор билда
  */
 async function fetchBuildById(buildId) {
-  const { data } = await api.Build.fetchBuild(buildId);
-  return data.data;
+  try {
+    const { data } = await api.Build.fetchBuild(buildId);
+    return data;
+  } catch (error) {
+    return undefined;
+  }
 }
 
 /**
  * Получить список сборок
  */
 async function fetchBuilds() {
-  const { data: { data = [] } = {} } = await api.Build.fetchBuilds();
+  const { data = [] } = await api.Build.fetchBuilds();
 
   return {
     buildsIds: data.map((build) => build.id),
@@ -61,6 +65,11 @@ const handleIndex = asyncHandler(async (req, res) => {
   const { buildId } = params;
 
   const initialState = await fetchInitialState(buildId);
+
+  if (buildId && !initialState.builds.buildsMap[buildId]) {
+    res.redirect('/');
+    return;
+  }
   const serializedState = serialize(initialState);
 
   const appMarkup = (process.env.NODE_ENV === 'production')

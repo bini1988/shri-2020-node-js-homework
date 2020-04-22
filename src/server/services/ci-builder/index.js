@@ -81,7 +81,8 @@ class CIBuilder {
       logger.info(`CIBuilder: Start build execution for ${build.buildId}`);
       await api.Build.startBuild(build);
     } catch (error) {
-      logger.error(`CIBuilder: Start build request failed for ${build.buildId}`, error);
+      logger.error(`CIBuilder: Start build request failed for ${build.buildId}`);
+      logger.error(error.stack);
     }
   }
 
@@ -94,7 +95,8 @@ class CIBuilder {
       logger.info(`CIBuilder: Finish build execution for ${build.buildId}`);
       await api.Build.finishBuild(build);
     } catch (error) {
-      logger.error(`CIBuilder: Finish build request failed for ${build.buildId}`, error);
+      logger.error(`CIBuilder: Finish build request failed for ${build.buildId}`);
+      logger.error(error.stack);
     }
   }
 }
