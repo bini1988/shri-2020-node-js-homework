@@ -7,8 +7,8 @@ const { renderAppToString } = require('../../../static/main.bundle.ssr');
  * Получить набор настроек
  */
 async function fetchSettings() {
-  const { data: { data = {} } = {} } = await api.Settings.fetch();
-  return data.repoName ? data : null;
+  const { data: settings = {} } = await api.Settings.fetch();
+  return settings.repoName ? settings : null;
 }
 
 /**

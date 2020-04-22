@@ -2,10 +2,10 @@
 const _ = require('lodash');
 const asyncHandler = require('express-async-handler');
 const ValidationError = require('../../services/errors/validation-error');
-const api = require('../../services/ci-api');
 
 /**
  * @typedef {import('./../../services/ci-manager')} CIManager
+ * @typedef {import('./../../services/ci-api')} Api
  */
 
 /**
@@ -47,6 +47,10 @@ module.exports = asyncHandler(async (req, res) => {
    * @type {CIManager}
    */
   const ci = req.app.locals.ci;
+  /**
+   * @type {Api}
+   */
+  const api = req.app.locals.api;
   const settings = parseSettings(req.body);
 
   await api.Settings.save(settings);
