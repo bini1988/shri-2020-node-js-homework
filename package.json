@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "cross-env NODE_ENV=production node index.js",
-    "start:server": "cross-env NODE_ENV=development nodemon index.js",
+    "start:server": "cross-env NODE_ENV=development nodemon --watch src/server index.js",
     "start:client": "cross-env NODE_ENV=development webpack-dev-server --color",
     "build:client": "cross-env NODE_ENV=production webpack --color",
     "test:selenium": "selenium-standalone start",
