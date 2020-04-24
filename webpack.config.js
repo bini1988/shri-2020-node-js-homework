@@ -26,7 +26,7 @@ const alias = {
  * Common Webpack Config
  */
 const common = {
-  entry: './src/client/index.js',
+  entry: './src/client/index',
   module: {
     rules: [
       {

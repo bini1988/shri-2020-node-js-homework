@@ -73,7 +73,7 @@ const handleIndex = asyncHandler(async (req, res) => {
   const serializedState = serialize(initialState);
 
   const appMarkup = (process.env.NODE_ENV === 'production')
-    ? renderAppToString(initialState, { location }) : '';
+    ? renderAppToString(initialState, location) : '';
   const env = process.env.NODE_ENV;
   const viewParams = { serializedState, appMarkup, env };
 
