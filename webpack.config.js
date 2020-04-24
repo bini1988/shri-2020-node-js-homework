@@ -177,7 +177,7 @@ const production = {
 
 const ssr = {
   mode: 'production',
-  entry: './src/client/index.ssr.js',
+  entry: './src/client/index.ssr',
   output: {
     path: OUTPUT_PATH,
     publicPath: '/',
