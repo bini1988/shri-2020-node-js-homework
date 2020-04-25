@@ -8,6 +8,9 @@ declare namespace CI {
     period: number;
   }
 
+  export type PostSettings =
+    Partial<Omit<Settings, 'id'>>
+
   export type BuildStatus =
     'Waiting' |
     'InProgress' |

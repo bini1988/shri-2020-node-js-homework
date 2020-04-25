@@ -1,0 +1,13 @@
+/* eslint-disable prefer-destructuring */
+import { Request, Response } from 'express';
+import asyncHandler from 'express-async-handler';
+import Api from '../../services/ci-api';
+
+/**
+ * Удаление сохраненных настроек
+ */
+export default asyncHandler(async (req: Request, res: Response) => {
+  const api = req.app.locals.api as typeof Api;
+  await api.Settings.remove();
+  res.status(200).end();
+});
