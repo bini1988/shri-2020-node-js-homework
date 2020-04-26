@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
@@ -8,8 +7,6 @@ import logger from './services/logger';
 import useRoutes from './routes';
 import CIManager from './services/ci-manager';
 import api from './services/ci-api';
-
-dotenv.config();
 
 const TMP_DIR = process.env.TMP_DIR || 'tmp';
 const STATIC_FOLDER = process.env.SERVER_STATIC_FOLDER || 'static';
@@ -30,7 +27,7 @@ app.use(cors())
 useRoutes(app);
 
 if (process.env.API_TOKEN === 'API_AUTH_TOKEN') {
-  logger.warning(
+  logger.error(
     'Api auth token hash to .env file under key of API_TOKEN is required',
   );
 }

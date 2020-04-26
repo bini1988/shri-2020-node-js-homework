@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node index.ts -r ts-node/register",
-    "start:server": "cross-env NODE_ENV=development TS_NODE_FILES=1 nodemon --watch src/server index.ts -r ts-node/register",
+    "start": "cross-env NODE_ENV=production TS_NODE_FILES=1 ts-node --project tsconfig.json index.ts",
+    "start:server": "cross-env NODE_ENV=development TS_NODE_FILES=1 nodemon",
     "start:client": "cross-env NODE_ENV=development webpack-dev-server --color",
     "build:client": "cross-env NODE_ENV=production webpack --color",
     "types:check": "tsc --noEmit",
