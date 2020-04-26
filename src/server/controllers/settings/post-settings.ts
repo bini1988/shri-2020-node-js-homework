@@ -11,10 +11,11 @@ import CIManager from '../../services/ci-manager';
  * @param {Object} body Тело запроса
  * @return {Object}
  */
-function parseSettings(body: CI.PostSettings) {
+function parseSettings(body: Query) {
   const { repoName, buildCommand } = body;
   const mainBranch = body.mainBranch || 'master';
-  const period = body.period || 0;
+  const period = _.isString(body.period)
+    ? parseInt(body.period, 10) : _.isNumber(body.period) ? body.period : 0;
 
   if (!_.isString(repoName) || _.isEmpty(repoName)) {
     throw new ValidationError('The name of the repo is required');
