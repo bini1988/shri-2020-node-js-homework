@@ -26,7 +26,7 @@ const alias = {
  * Common Webpack Config
  */
 const common = {
-  entry: './src/client/index.js',
+  entry: './src/client/index',
   module: {
     rules: [
       {
@@ -177,7 +177,7 @@ const production = {
 
 const ssr = {
   mode: 'production',
-  entry: './src/client/index.ssr.js',
+  entry: './src/client/index.ssr',
   output: {
     path: OUTPUT_PATH,
     publicPath: '/',
