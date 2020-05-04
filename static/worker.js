@@ -12,11 +12,11 @@
  *
  */
 
-const CACHE_NAME = 'SHRI-2020-APP-CACHE-0.0.3';
+self.CACHE_NAME = 'SHRI-2020-APP-CACHE-0.0.3';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) =>
+    caches.open(self.CACHE_NAME).then((cache) =>
       cache.addAll([
         '/main.style.min.css',
         '/manifest.bundle.min.js',
@@ -31,7 +31,7 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then(keys => {
       return Promise.all(keys.map(key => {
-        if (key !== CACHE_NAME) {
+        if (key !== self.CACHE_NAME) {
           return caches.delete(key);
         }
       }))
@@ -51,7 +51,7 @@ self.addEventListener('fetch', function(event) {
 });
 
 function fromCache(request) {
-  return caches.open(CACHE_NAME).then((cache) =>
+  return caches.open(self.CACHE_NAME).then((cache) =>
     cache.match(request).then((matching) => {
       if (matching && matching.ok) {
         return matching;
