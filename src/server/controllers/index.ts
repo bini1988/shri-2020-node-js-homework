@@ -30,7 +30,7 @@ export const handleIndex = asyncHandler(async (req: Request, res: Response) => {
   const { url: location, params: { buildId } } = req;
   const state = await fetchState(buildId);
 
-  if (buildId && state?.builds.buildsMap[buildId]) {
+  if (buildId && !state?.builds.buildsMap[buildId]) {
     res.redirect('/');
     return;
   }
