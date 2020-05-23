@@ -18,3 +18,13 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   ReactDOM.render(element, container);
 }
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('worker.js').then(() => {
+      console.log('ServiceWoker registration successful');
+    }).catch(error => {
+      console.log('ServiceWoker registration failed: ', error);
+    })
+  });
+}
