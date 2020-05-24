@@ -27,7 +27,7 @@ async function fetchState(buildId: string): Promise<RootState | undefined> {
 }
 
 export const handleIndex = asyncHandler(async (req: Request, res: Response) => {
-  const { url: location, params: { buildId } } = req;
+  const { params: { buildId } } = req;
   const state = await fetchState(buildId);
 
   if (buildId && !state?.builds.buildsMap[buildId]) {
@@ -36,7 +36,7 @@ export const handleIndex = asyncHandler(async (req: Request, res: Response) => {
   }
   const serializedState = serialize(state);
   const appMarkup = (process.env.NODE_ENV === 'production')
-    ? renderAppToString(state, location) : '';
+    ? renderAppToString(state, req) : '';
   const env = process.env.NODE_ENV;
 
   res.status(200).render('index', { serializedState, appMarkup, env });

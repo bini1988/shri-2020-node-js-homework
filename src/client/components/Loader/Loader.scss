@@ -1,14 +1,12 @@
-.Loader {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
-}
-
-.Loader {
-  content: "";
+.Loader,
+.Loader-Wrap {
   display: block;
   width: 64px;
   height: 64px;
+}
+
+.Loader-Wrap {
+  content: "";
   border-radius: 50%;
   border: 6px solid var(--color-bg-action);
   border-color: var(--color-bg-action) transparent var(--color-bg-action) transparent;
@@ -18,4 +16,13 @@
 @keyframes rotate {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.Loader_center {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+.Loader_center .Loader-Wrap {
+  margin: auto;
 }

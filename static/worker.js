@@ -42,7 +42,8 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', function(event) {
   if (
     event.request.method !== 'GET' ||
-    event.request.url.includes('/api/')
+    event.request.url.includes('/api/') ||
+    event.request.destination === 'document'
   ) {
     return;
   }

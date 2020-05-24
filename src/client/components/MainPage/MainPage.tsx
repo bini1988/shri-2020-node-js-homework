@@ -2,6 +2,7 @@ import React, { useCallback, FC } from 'react';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
 import { History } from 'history';
+import { useTranslation } from 'react-i18next';
 import './MainPage.scss';
 import PageHeader from '../PageHeader';
 import PageFooter from '../PageFooter';
@@ -16,6 +17,7 @@ export interface IMainPageProps {
 
 const MainPage: FC<IMainPageProps> = (props) => {
   const { className, history } = props;
+  const { t } = useTranslation();
   const handleSettings =
     useCallback(() => history.push('/settings'), [history]);
 
@@ -31,7 +33,7 @@ const MainPage: FC<IMainPageProps> = (props) => {
         <PageHeader.Aside>
           <Button
             adaptive
-            label="Settings"
+            label={t("settings_label")}
             iconName="settings"
             data-test="btn-settings"
             size="s"
@@ -46,12 +48,10 @@ const MainPage: FC<IMainPageProps> = (props) => {
               <svg className={bn('Logo')} width="124" height="124">
                 <use xlinkHref="#logo" />
               </svg>
-              <p className={bn('Label')}>
-                Configure repository connection and&nbsp;synchronization settings
-              </p>
+              <p className={bn('Label')}>{t("settings_description")}</p>
               <Button
                 theme="action"
-                label="Open settings"
+                label={t("open_settings")}
                 data-test="btn-settings"
                 onClick={handleSettings}
               />

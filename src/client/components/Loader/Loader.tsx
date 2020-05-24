@@ -7,10 +7,13 @@ const bn = cn('Loader');
 
 export interface ILoaderProps {
   className?: string;
+  center?: boolean;
 }
 
-const Loader: FC<ILoaderProps> = (props) => (
-  <div className={classnames(props.className, bn())} />
+const Loader: FC<ILoaderProps> = ({ className, center }) => (
+  <div className={classnames(className, bn({ center }))}>
+    <div className={bn('Wrap')}/>
+  </div>
 );
 
 export default Loader;

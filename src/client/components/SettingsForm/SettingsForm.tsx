@@ -1,6 +1,7 @@
 import React, { useCallback, FC, FormEventHandler } from 'react';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
+import { useTranslation } from 'react-i18next';
 import './SettingsForm.scss';
 import useSettingsForm from './useSettingsForm';
 import Button from '../Button';
@@ -20,6 +21,7 @@ export interface ISettingsFormProps {
 
 const SettingsForm: FC<ISettingsFormProps> = (props) => {
   const { className, initial, onSubmit, onCancel } = props;
+  const { t } = useTranslation();
   const [
     { values, errors, submitting }, onChangeOf, onSubmitHandler
   ] = useSettingsForm({ initial, onSubmit });
@@ -35,10 +37,8 @@ const SettingsForm: FC<ISettingsFormProps> = (props) => {
       className={classnames(className, bn())}
       data-test="settings-form"
     >
-      <h3 className={bn('Title')} data-test="title">Settings</h3>
-      <p className={bn('Text')}>
-        Configure repository connection and synchronization settings.
-      </p>
+      <h3 className={bn('Title')} data-test="title">{t('settings_title')}</h3>
+      <p className={bn('Text')}>{t('settings_description')}</p>
       <form
         className={bn('Form')}
         data-test="form"
@@ -51,7 +51,7 @@ const SettingsForm: FC<ISettingsFormProps> = (props) => {
             id="repoName"
             name="repoName"
             value={values.repoName}
-            label="GitHub repository"
+            label={t("repo_name_label")}
             placeholder="user-name/repo-name"
             required
             onChange={onChangeOf('repoName')}
@@ -62,7 +62,7 @@ const SettingsForm: FC<ISettingsFormProps> = (props) => {
             id="buildCommand"
             name="buildCommand"
             value={values.buildCommand}
-            label="Build command"
+            label={t("build_command_label")}
             placeholder="npm run build"
             required
             onChange={onChangeOf('buildCommand')}
@@ -73,7 +73,7 @@ const SettingsForm: FC<ISettingsFormProps> = (props) => {
             id="mainBranch"
             name="mainBranch"
             value={values.mainBranch}
-            label="Main branch"
+            label={t('main_branch_label')}
             placeholder="master"
             onChange={onChangeOf('mainBranch')}
           />
@@ -83,9 +83,9 @@ const SettingsForm: FC<ISettingsFormProps> = (props) => {
             id="period"
             name="period"
             value={values.period}
-            label="Synchronize every"
+            label={t("period_label")}
             placeholder="999"
-            units="minutes"
+            units={t("period_units")}
             min="0"
             max="999"
             onChange={onChangeOf('period')}
@@ -96,14 +96,14 @@ const SettingsForm: FC<ISettingsFormProps> = (props) => {
             className={bn('Button')}
             data-test="submit"
             theme="action"
-            label="Save"
+            label={t("submit_label")}
             type="submit"
             disabled={!!errors || submitting}
           />
           <Button
             className={bn('Button')}
             data-test="cancel"
-            label="Cancel"
+            label={t("cancel_label")}
             disabled={submitting}
             onClick={onCancel}
           />
