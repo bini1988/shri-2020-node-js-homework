@@ -5,6 +5,7 @@ import { History } from 'history';
 import { useSelector, useDispatch } from 'react-redux';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
+import { useTranslation } from 'react-i18next';
 
 import './BuildHistoryPage.scss';
 import { getSettingOfRepoName } from '../../services/redux/reducer/settings';
@@ -27,6 +28,7 @@ export interface IBuildHistoryPageProps {
 const BuildHistoryPage: FC<IBuildHistoryPageProps> = (props) => {
   const { className, history } = props;
 
+  const { t } = useTranslation();
   const repoName = useSelector(getSettingOfRepoName);
   const buildsCards = useSelector(getBuildsCards);
   const dispatch = useDispatch();
@@ -54,14 +56,14 @@ const BuildHistoryPage: FC<IBuildHistoryPageProps> = (props) => {
         >
           <Button
             adaptive
-            label="Run build"
+            label={t("run_build_label")}
             iconName="play"
             data-test="btn-build"
             size="s"
             onClick={openDialog}
           />
           <Button
-            label="Settings"
+            label={t("settings_label")}
             iconName="settings"
             data-test="btn-settings"
             size="s"
@@ -73,9 +75,6 @@ const BuildHistoryPage: FC<IBuildHistoryPageProps> = (props) => {
       <main className={bn('Main')}>
         <div className={classnames(bn('Container'), 'Container')}>
           <section className={bn('History')}>
-            <h3 className={bn('Title')}>
-              BuildHistoryPage
-            </h3>
             <ul className={bn('Items')} data-test="card-items">
               {buildsCards.map((build) => (
                 <li className={bn('Item')} key={build.id}>
@@ -92,7 +91,7 @@ const BuildHistoryPage: FC<IBuildHistoryPageProps> = (props) => {
             {(buildsCards.length > 0) && (
               <Button
                 className={bn('More')}
-                label="Show more"
+                label={t("show_more_label")}
                 size="s"
               />
             )}

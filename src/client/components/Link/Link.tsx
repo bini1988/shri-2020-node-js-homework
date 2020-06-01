@@ -5,7 +5,7 @@ import './Link.scss';
 
 const bn = cn('Link');
 
-export interface ILinkProps {
+export interface ILinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   className?: string;
   label?: string;
   href?: string;

@@ -5,6 +5,7 @@ import { History } from 'history';
 import { useSelector, useDispatch } from 'react-redux';
 import { cn } from '@bem-react/classname';
 import { classnames } from '@bem-react/classnames';
+import { useTranslation } from 'react-i18next';
 
 import './BuildDetailsPage.scss';
 import {
@@ -38,6 +39,7 @@ const BuildDetailsPage: FC<IBuildDetailsPageProps> = (props) => {
   const { className, history, match } = props;
   const buildId = match && match.params.id;
 
+  const { t } = useTranslation();
   const repoName = useSelector(getSettingOfRepoName);
   const buildCard =useSelector<RootState, CI.Build>(
     (state) => getBuildCardById(state, buildId)
@@ -67,14 +69,14 @@ const BuildDetailsPage: FC<IBuildDetailsPageProps> = (props) => {
         <PageHeader.Aside className={bn('Aside')}>
           <Button
             adaptive
-            label="Rebuild"
+            label={t("rebuild_label")}
             iconName="rebuild"
             data-test="btn-rebuild"
             size="s"
             onClick={() => handleQueueBuild(commitHash)}
           />
           <Button
-            label="Settings"
+            label={t("settings_label")}
             iconName="settings"
             data-test="btn-settings"
             size="s"
