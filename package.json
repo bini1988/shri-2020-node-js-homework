@@ -109,7 +109,7 @@
     "eslint-plugin-react-hooks": "^2.5.0",
     "eslint-plugin-standard": "^4.0.1",
     "file-loader": "^6.0.0",
-    "hermione": "^3.1.0",
+    "hermione": "^5.3.1",
     "html-webpack-plugin": "^4.0.1",
     "ignore-loader": "^0.1.2",
     "jest": "^25.5.4",
